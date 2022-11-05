@@ -28,7 +28,7 @@ module.exports = {
     semi: ['error', 'never'],
     'max-lines': ['error', 350],
     'comma-dangle': ['error', 'never'],
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'off',
     'no-process-env': 'off',
     'prettier/prettier': [
       'error',
@@ -36,7 +36,7 @@ module.exports = {
         printWidth: 80,
         semi: false,
         'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
-        'no-unused-vars': ['error'],
+        'no-unused-vars': ['off'],
         singleQuote: true,
         jsxSingleQuote: true,
         endOfLine: 'auto',

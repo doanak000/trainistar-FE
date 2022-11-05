@@ -8,7 +8,12 @@ export const loginSlice = createSlice({
     userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? {}
   },
   reducers: {
-    loginSuccess: (state, action) => {},
+      loginSuccess: (state, action) => {
+      state.isLoggedIn = true
+      // state?.userInfo = action.payload.userInfo
+      // localStorage.setItem('userInfo', JSON.stringify(action?.payload?.userInfo))
+      localStorage.setItem('lastOnlineTime', new Date().getTime())
+    },
     loginFail: (state, action) => {
       state.isLoggedIn = false
       state.message = action.payload

@@ -13,6 +13,11 @@ import {
   WrapperLogin,
   WrapperLoginForm
 } from './Login.style'
+import { useDispatch } from 'react-redux'
+ import { useHistory } from 'react-router-dom'
+import { loginSuccess } from './loginSlice'
+import { NOTIFICATION_TYPE } from '../../constants/common'
+import { translation } from '../../configs/translation'
 
 const layout = {
   labelCol: {
@@ -29,11 +34,11 @@ const tailLayout = {
   }
 }
 const Login = () => {
- // const dispatch = useDispatch()
- // const location = useLocation()
- // const history = useHistory()
-  // const translation = useSelector(selectTranslation)
-  // const { from } = location.state || { from: { pathname: '/' } }
+ const dispatch = useDispatch()
+  const history = useHistory()
+   const [stopLogin, setStopLogin] = useState(false)
+   const [loadingState, setLoadingState] = useState(false)
+     const { from } =  { from: { pathname: '/' } }
   const [user, setUser] = useState({
     username: '',
     password: ''
@@ -45,8 +50,28 @@ const Login = () => {
       [event?.target?.name]: event?.target?.value
     })
   }
-
-  const loginHandler = () => {}
+// chưa có api nên tui để login auto đúng vô đC.
+    const loginHandler = async () => {
+    setStopLogin(true)
+    setLoadingState(true)
+    // CALL API ROI SET MAY CAI KIEU NHU NAY: displayName là để hiẹn thị name người dùng trên nav bar
+// và role này kia cũng vậy, nói chung là lấy từ api về r gắn vô, để bắn lên store redux để lưu lại
+          localStorage.setItem('access_token', `${null}`)
+          localStorage.setItem('role', `${null}`)
+          dispatch(
+            loginSuccess({
+              userInfo: {
+                displayName: `${null}`,
+                role: `${null}`,
+                id: `${null}`
+              }
+            })
+          )
+            history.replace(from)
+    
+          setLoadingState(false)
+  }
+  
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
