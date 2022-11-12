@@ -29,14 +29,14 @@ import { selectTranslation } from '../../features/language/languageSlice'
 
 const LayoutAdmin = (props) => {
   const { children } = props
-  const [selectedKey, setSelectedKey] = useState(SIDEBAR.USER)
+  const [selectedKey, setSelectedKey] = useState(SIDEBAR.LISTCOURSEPAGE)
 
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
   const dispatch = useDispatch()
   const location = useLocation()
   const userInfo = useSelector(selectUserInfo)
   const translation = useSelector(selectTranslation)
-  const [tabName, setTabName] = useState(translation.TAB_USER)
+  const [tabName, setTabName] = useState(translation.TAB_LISTCOURSEPAGE)
   useEffect(() => {
     setSelectedKey(location.pathname)
   }, [location.pathname])
@@ -69,14 +69,14 @@ const LayoutAdmin = (props) => {
           }}
         >
           <CustomMenuItem
-            key={SIDEBAR.USER}
+            key={SIDEBAR.LISTCOURSEPAGE}
             icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
           >
             <Link
-              to={PATH.USER}
-              onClick={() => selectTabName(translation.TAB_USER)}
+              to={PATH.LISTCOURSEPAGE}
+              onClick={() => selectTabName(translation.TAB_LISTCOURSEPAGE)}
             >
-              {translation.TAB_USER}
+              {translation.TAB_LISTCOURSEPAGE}
             </Link>
           </CustomMenuItem>
           <CustomMenuItem

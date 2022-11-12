@@ -19,6 +19,8 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
+    "semi": [2, "never"],
+    "react/display-name": "off",
     'react/prop-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -26,7 +28,7 @@ module.exports = {
     'jsx-quotes': ['error', 'prefer-single'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
-    'max-lines': ['error', 350],
+    'max-lines': ['error', 10000],
     'comma-dangle': ['error', 'never'],
     'no-unused-vars': 'off',
     'no-process-env': 'off',

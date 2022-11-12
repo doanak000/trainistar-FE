@@ -1,12 +1,12 @@
 export const PATH = Object.freeze({
-  USER: '/user',
+  LISTCOURSEPAGE: '/listcourse',
   EVENT: '/event',
   VIDEO: '/video',
   LOGIN: '/login'
 })
 
 export const SIDEBAR = Object.freeze({
-  USER: PATH.USER,
+  LISTCOURSEPAGE: PATH.LISTCOURSEPAGE,
   EVENT: PATH.EVENT,
   VIDEO: PATH.VIDEO,
   LOGOUT: 'logout'
@@ -20,7 +20,7 @@ export const ROLE = Object.freeze({
 
 export const ROUTES = Object.freeze({
   PRIVATE: [
-    { path: PATH.USER, component: 'UserPage' },
+    { path: PATH.LISTCOURSEPAGE, component: 'ListCoursePage' },
     { path: PATH.EVENT, component: 'EventPage' },
     { path: PATH.VIDEO, component: 'VideoPage' }
   ],
@@ -32,4 +32,18 @@ export const NOTIFICATION_TYPE = Object.freeze({
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info'
+})
+
+export const COLUMN_TYPE = Object.freeze({
+  TEXT: 'text',
+  DATE: 'date',
+  DATE_STRING: 'dateString',
+  NUMBER: 'number',
+  LINK: 'link'
+})
+
+export const CREATE_UPDATE_DELETE_STATUS = Object.freeze({
+  UPCOMING: 'upcoming',
+  SUCCESS: 'success',
+  ERROR: 'error'
 })

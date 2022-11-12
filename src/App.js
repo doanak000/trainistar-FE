@@ -21,7 +21,7 @@ const App = () => {
           <Switch>
             {PublicRoutes}
             {PrivateRoutes}
-            <Redirect to={PATH.USER} />
+            <Redirect to={PATH.LISTCOURSEPAGE} />
           </Switch>
         </LayoutAdmin>
       </Suspense>
