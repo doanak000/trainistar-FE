@@ -10,7 +10,7 @@ export const WrapperLogin = styled.div`
 `
 export const WrapperLoginForm = styled.div`
   padding: calc(3 * ${themeGet('spaces.container')}px);
-  box-shadow: 7px 7px 2px 1px #aca5bb;
+  box-shadow: 7px 7px 2px 1px #C7E3FF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +30,7 @@ export const TitleLogin = styled.p`
   text-align: center;
   font-weight: 700;
   font-size: 3rem;
-  background: -webkit-linear-gradient(#814a8c, ${themeGet('colors.primary')});
+  background: -webkit-linear-gradient(#74b9ff, ${themeGet('colors.primary')});
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 10px;
@@ -43,4 +43,11 @@ export const LoginLable = styled.span`
 export const LoginButton = styled(Button)`
   padding-left: 31px;
   padding-right: 31px;
+  background: ${themeGet('colors.primary')};
+  border: none;
+  
+  &:hover {
+    background: ${themeGet('colors.primaryHover')};
+    border: none;
+  }
 `
