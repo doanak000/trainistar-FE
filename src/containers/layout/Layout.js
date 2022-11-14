@@ -58,7 +58,7 @@ const LayoutAdmin = (props) => {
         width={theme.sideBarWidth}
         style={!isLoggedIn ? { display: 'none' } : {}}
       >
-        <Logo>QR Kuji Vermuda</Logo>
+        <Logo>Trainistar</Logo>
         <CustomMenu
           theme='dark'
           mode='inline'
@@ -117,6 +117,7 @@ const LayoutAdmin = (props) => {
           </CustomMenuItem>
         </CustomMenu>
       </CustomSider>
+
       <Layout className='site-layout'>
         <CustomHeader style={!isLoggedIn ? { display: 'none' } : {}}>
           <TabName>{tabName}</TabName>
