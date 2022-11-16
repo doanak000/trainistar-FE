@@ -70,7 +70,7 @@ const LayoutAdmin = (props) => {
         >
           <CustomMenuItem
             key={SIDEBAR.LISTCOURSEPAGE}
-            icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
+            icon={<VideoCameraOutlined style={{ fontSize: theme.sizes.M }} />}
           >
             <Link
               to={PATH.LISTCOURSEPAGE}
@@ -79,6 +79,19 @@ const LayoutAdmin = (props) => {
               {translation.TAB_LISTCOURSEPAGE}
             </Link>
           </CustomMenuItem>
+
+          <CustomMenuItem
+            key={SIDEBAR.STUDENTS}
+            icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
+          >
+            <Link
+              to={PATH.STUDENTS}
+              onClick={() => selectTabName(translation.TAB_STUDENTS)}
+            >
+              {translation.TAB_STUDENTS}
+            </Link>
+          </CustomMenuItem>
+
           <CustomMenuItem
             key={SIDEBAR.EVENT}
             icon={<VideoCameraOutlined style={{ fontSize: theme.sizes.M }} />}

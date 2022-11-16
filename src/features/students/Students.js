@@ -1,7 +1,6 @@
 import { Button, Drawer, Form, Input, Space, Table } from 'antd'
 import React, { useState } from 'react'
 
-
 const Students = () => {
   const [open, setOpen] = useState(false)
   const showDrawer = () => {
@@ -65,19 +64,19 @@ const Students = () => {
     render: (text) => <a>{text}</a>
   },
   {
-    title: 'List Enroll Courses',
+    title: 'List enroll courses',
     dataIndex: 'listCourse',
     key: 'listCourse',
     render: (text) => <a>{text}</a>
   },
   {
-    title: 'List Skills',
+    title: 'List skills',
     dataIndex: 'listSkill',
     key: 'listSkill',
     render: (text) => <a>{text}</a>
   },
   {
-    title: 'List Certificates',
+    title: 'List certificates',
     dataIndex: 'listCertificate',
     key: 'listCertificate',
     render: (text) => <a>{text}</a>
@@ -98,30 +97,29 @@ const Students = () => {
   const data = [
   {
     key: '1',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
+    username: 'minhvo',
+    password: 'abc123',
+    firstName: 'Minh',
+    lastName: 'Vo',
+    email: 'ducminh12320@gmail.com',
+    phoneNumber: '07979999281',
+    gender: 'male',
+    listCourse: '',
+    listSkill: '',
+    listCertificate: ''
   },
   {
     key: '2',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '3',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '4',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '5',
-    name: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
+    username: 'dainguyen',
+    password: 'abc123',
+    firstName: 'Dai',
+    lastName: 'Nguyen',
+    email: 'ncdai3651408@icloud.com',
+    phoneNumber: '0777888148',
+    gender: 'male',
+    listCourse: '',
+    listSkill: '',
+    listCertificate: ''
   }
 ]
 
@@ -139,22 +137,71 @@ return (
               autoComplete='off'
             >
               <Form.Item
-                label='Course'
-                name='nameCourse'
+                label='Username'
+                name='username'
               >
                 <Input />
               </Form.Item>
 
               <Form.Item
-                label='Teacher'
-                name='teacher'
+                label='Password'
+                name='password'
               >
                 <Input />
               </Form.Item>
 
               <Form.Item
-                label='Description'
-                name='description'
+                label='First name'
+                name='firstName'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Last name'
+                name='lastName'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Email'
+                name='email'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Phone number'
+                name='phoneNumber'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Gender'
+                name='gender'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='List enroll courses'
+                name='listCourse'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='List skills'
+                name='listSkill'
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='List certificates'
+                name='listCertificate'
               >
                 <Input />
               </Form.Item>
