@@ -3,7 +3,7 @@ export const translation = {
     QUESTION_CONFIRM: 'Are you sure?',
     BUTTON_CANCEL: 'Cancel',
     BUTTON_OK: 'OK',
-    TAB_LISTCOURSEPAGE: 'lIST COURSES',
+    TAB_LISTCOURSEPAGE: 'Courses',
     TAB_VIDEO: 'Video',
     TAB_EVENT: 'Event',
     CONFIRM_LOGOUT: 'Are you sure you want to logout?',

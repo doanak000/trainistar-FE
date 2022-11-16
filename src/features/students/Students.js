@@ -1,8 +1,8 @@
-import { Button, Drawer, Form, Input, Space, Table, Tag } from 'antd'
+import { Button, Drawer, Form, Input, Space, Table } from 'antd'
 import React, { useState } from 'react'
 
 
-const ListCourses = () => {
+const Students = () => {
   const [open, setOpen] = useState(false)
   const showDrawer = () => {
     console.log('----Show Drawer Log----')
@@ -21,25 +21,66 @@ const ListCourses = () => {
         setOpen(false)
   }
 
-
   const columns = [
   {
-    title: 'Courses',
-    dataIndex: 'nameCourse',
-    key: 'name',
+    title: 'Username',
+    dataIndex: 'username',
+    key: 'username',
     render: (text) => <a>{text}</a>
   },
   {
-    title: 'Teacher',
-    dataIndex: 'teacher',
-    key: 'teacher',
-     render: (text) => <a>{text}</a>
+    title: 'Password',
+    dataIndex: 'password',
+    key: 'password',
+    render: (text) => <a>{text}</a>
   },
   {
-    title: 'description',
-    dataIndex: 'description',
-    key: 'description',
-     render: (text) => <a>{text}</a>
+    title: 'First name',
+    dataIndex: 'firstName',
+    key: 'firstName',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Last name',
+    dataIndex: 'lastName',
+    key: 'lastName',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Phone number',
+    dataIndex: 'phoneNumber',
+    key: 'phoneNumber',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Gender',
+    dataIndex: 'gender',
+    key: 'gender',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'List Enroll Courses',
+    dataIndex: 'listCourse',
+    key: 'listCourse',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'List Skills',
+    dataIndex: 'listSkill',
+    key: 'listSkill',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'List Certificates',
+    dataIndex: 'listCertificate',
+    key: 'listCertificate',
+    render: (text) => <a>{text}</a>
   },
   {
     title: 'Action',
@@ -53,6 +94,7 @@ const ListCourses = () => {
     )
   }
 ]
+
   const data = [
   {
     key: '1',
@@ -82,6 +124,7 @@ const ListCourses = () => {
     description: 'khoa hoc ve ... '
   }
 ]
+
 return (
   <>
        <Table columns={columns} dataSource={data} />
@@ -128,5 +171,5 @@ return (
 )
 
 }
- export default ListCourses
+ export default Students
  
