@@ -1,5 +1,7 @@
 import { Button, Drawer, Form, Input, Space, Table } from 'antd'
 import React, { useState } from 'react'
+// import { FormStudent, TableStudent } from './Students.style'
+import './students.css'
 
 const Students = () => {
   const [open, setOpen] = useState(false)
@@ -25,62 +27,62 @@ const Students = () => {
     title: 'Username',
     dataIndex: 'username',
     key: 'username',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'Password',
     dataIndex: 'password',
     key: 'password',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'First name',
     dataIndex: 'firstName',
     key: 'firstName',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'Last name',
     dataIndex: 'lastName',
     key: 'lastName',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'Phone number',
     dataIndex: 'phoneNumber',
     key: 'phoneNumber',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'Gender',
     dataIndex: 'gender',
     key: 'gender',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
-    title: 'List enroll courses',
+    title: 'List courses',
     dataIndex: 'listCourse',
     key: 'listCourse',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
   {
     title: 'List skills',
     dataIndex: 'listSkill',
     key: 'listSkill',
-    render: (text) => <a>{text}</a>
+    render: (text) => <p>{text}</p>
   },
-  {
-    title: 'List certificates',
-    dataIndex: 'listCertificate',
-    key: 'listCertificate',
-    render: (text) => <a>{text}</a>
-  },
+  // {
+  //   title: 'List certificates',
+  //   dataIndex: 'listCertificate',
+  //   key: 'listCertificate',
+  //   render: (text) => <p>{text}</p>
+  // },
   {
     title: 'Action',
     key: 'action',
@@ -105,8 +107,8 @@ const Students = () => {
     phoneNumber: '07979999281',
     gender: 'male',
     listCourse: '',
-    listSkill: '',
-    listCertificate: ''
+    listSkill: ''
+    // listCertificate: ''
   },
   {
     key: '2',
@@ -118,8 +120,8 @@ const Students = () => {
     phoneNumber: '0777888148',
     gender: 'male',
     listCourse: '',
-    listSkill: '',
-    listCertificate: ''
+    listSkill: ''
+    // listCertificate: ''
   }
 ]
 
@@ -186,7 +188,7 @@ return (
               </Form.Item>
 
               <Form.Item
-                label='List enroll courses'
+                label='List courses'
                 name='listCourse'
               >
                 <Input />
@@ -199,12 +201,12 @@ return (
                 <Input />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 label='List certificates'
                 name='listCertificate'
               >
                 <Input />
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type='primary' htmlType='submit'>
