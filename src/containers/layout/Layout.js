@@ -6,7 +6,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  HomeOutlined
 } from '@ant-design/icons'
 import {
   CustomContent,
@@ -24,30 +25,31 @@ import { confirm } from '../../components/ConfirmModal/ConfirmModal'
 import { PATH, SIDEBAR } from '../../constants/common'
 import { Link, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, selectUserInfo } from '../../features/login/loginSlice'
+import { authActions } from '../../features/auth/authSlice'
 import { selectTranslation } from '../../features/language/languageSlice'
 
-const LayoutAdmin = (props) => {
-  const { children } = props
+const LayoutAdmin = ({ children }) => {
+  const dispatch = useDispatch()
+
   const [selectedKey, setSelectedKey] = useState(SIDEBAR.LISTCOURSEPAGE)
 
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
-  const dispatch = useDispatch()
   const location = useLocation()
-  const userInfo = useSelector(selectUserInfo)
   const translation = useSelector(selectTranslation)
   const [tabName, setTabName] = useState(translation.TAB_LISTCOURSEPAGE)
+
   useEffect(() => {
     setSelectedKey(location.pathname)
   }, [location.pathname])
+
   const selectTabName = (tabName) => {
     setTabName(tabName)
   }
+
   const logoutHandler = () => {
     confirm({
       content: translation.CONFIRM_LOGOUT,
       onOk: () => {
-        dispatch(logout())
+        dispatch(authActions.logout())
       }
     })
   }
@@ -56,9 +58,9 @@ const LayoutAdmin = (props) => {
     <Layout>
       <CustomSider
         width={theme.sideBarWidth}
-        style={!isLoggedIn ? { display: 'none' } : {}}
       >
-        <Logo>QR Kuji Vermuda</Logo>
+        <Logo>Trainistar</Logo>
+
         <CustomMenu
           theme='dark'
           mode='inline'
@@ -68,6 +70,17 @@ const LayoutAdmin = (props) => {
             key !== SIDEBAR.LOGOUT && setSelectedKey(key)
           }}
         >
+          <CustomMenuItem
+            key={SIDEBAR.HOME}
+            icon={<HomeOutlined style={{ fontSize: theme.sizes.M }} />}
+          >
+            <Link
+              to={PATH.HOME}
+              onClick={() => selectTabName('HOME')}
+            >
+              HOME
+            </Link>
+          </CustomMenuItem>
           <CustomMenuItem
             key={SIDEBAR.LISTCOURSEPAGE}
             icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
@@ -106,19 +119,19 @@ const LayoutAdmin = (props) => {
             icon={<LogoutOutlined style={{ fontSize: theme.sizes.M }} />}
             onClick={logoutHandler}
             danger
-            selectable={false}
+            selectable='false'
             style={{
               marginTop: theme.spaces.twenty * 3,
               alignSelf: 'flex-end'
-              // backgroundColor: '#ffe6e6'
             }}
           >
             {translation.TEXT_LOGOUT}
           </CustomMenuItem>
         </CustomMenu>
       </CustomSider>
+
       <Layout className='site-layout'>
-        <CustomHeader style={!isLoggedIn ? { display: 'none' } : {}}>
+        <CustomHeader>
           <TabName>{tabName}</TabName>
           <UserInfo>
             <Avatar
@@ -126,7 +139,7 @@ const LayoutAdmin = (props) => {
               icon={<UserOutlined />}
               style={{ color: theme.colors.primary }}
             />
-            <DisplayName>{userInfo.displayName}</DisplayName>
+            <DisplayName>Dai Nguyen</DisplayName>
           </UserInfo>
         </CustomHeader>
         <CustomContent>{children}</CustomContent>

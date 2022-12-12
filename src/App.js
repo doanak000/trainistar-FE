@@ -2,28 +2,24 @@ import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
 import Spinner from './components/spinner/Spinner'
 import LayoutAdmin from './containers/layout/Layout'
-import { PublicRoutes, PrivateRoutes } from './configs/Router'
+import { PublicRoutes, PrivateRoutes, PrivateRoute } from './configs/Router'
 import { PATH } from './constants/common'
 
 const App = () => {
   return (
     <Router>
       <Suspense
-        fallback={
-          <LayoutAdmin>
-            <div>
-              <Spinner size={20} />
-            </div>
-          </LayoutAdmin>
-        }
+        fallback={<div />}
       >
-        <LayoutAdmin>
-          <Switch>
-            {PublicRoutes}
-            {PrivateRoutes}
-            <Redirect to={PATH.LISTCOURSEPAGE} />
-          </Switch>
-        </LayoutAdmin>
+        <Switch>
+          {PublicRoutes}
+
+          <PrivateRoute path='/admin'>
+            <LayoutAdmin>
+              {PrivateRoutes}
+            </LayoutAdmin>
+          </PrivateRoute>
+        </Switch>
       </Suspense>
     </Router>
   )

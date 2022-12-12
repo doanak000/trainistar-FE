@@ -14,5 +14,4 @@ export const GlobalStyle = createGlobalStyle`
   body {
     /* font-family: 'Montserrat', sans-serif; 'Roboto', sans-serif; */
   }
-  .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before { content: "";}
 `

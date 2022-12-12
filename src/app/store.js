@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import authReducer from '../features/auth/authSlice'
 import counterReducer from '../features/counter/counterSlice'
-import loginReducer from '../features/login/loginSlice'
 import languageReducer from '../features/language/languageSlice'
 
 export default configureStore({
   reducer: {
+    auth: authReducer,
     counter: counterReducer,
-    login: loginReducer,
     language: languageReducer
   }
 })

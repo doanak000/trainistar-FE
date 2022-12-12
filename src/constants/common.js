@@ -1,11 +1,13 @@
 export const PATH = Object.freeze({
-  LISTCOURSEPAGE: '/listcourse',
-  EVENT: '/event',
-  VIDEO: '/video',
-  LOGIN: '/login'
+  LISTCOURSEPAGE: '/admin/listcourse',
+  EVENT: '/admin/event',
+  VIDEO: '/admin/video',
+  LOGIN: '/login',
+  HOME: '/admin'
 })
 
 export const SIDEBAR = Object.freeze({
+  HOME: PATH.HOME,
   LISTCOURSEPAGE: PATH.LISTCOURSEPAGE,
   EVENT: PATH.EVENT,
   VIDEO: PATH.VIDEO,
@@ -15,11 +17,14 @@ export const SIDEBAR = Object.freeze({
 export const ROLE = Object.freeze({
   ADMIN: 'admin',
   AGENCY: 'agency',
-  CLIENT: 'client'
+  CLIENT: 'client',
+
+  MANAGER: 'manager'
 })
 
 export const ROUTES = Object.freeze({
   PRIVATE: [
+    { path: PATH.HOME, exact: true, component: 'HomePage' },
     { path: PATH.LISTCOURSEPAGE, component: 'ListCoursePage' },
     { path: PATH.EVENT, component: 'EventPage' },
     { path: PATH.VIDEO, component: 'VideoPage' }
@@ -47,3 +52,12 @@ export const CREATE_UPDATE_DELETE_STATUS = Object.freeze({
   SUCCESS: 'success',
   ERROR: 'error'
 })
+
+export const AUTH_TOKEN_KEY = '@Trainistar:AUTH_TOKEN'
+export const AUTH_ROLE_KEY = '@Trainistar:AUTH_ROLE'
+
+export const FAKE_USER = {
+  fullName: 'Dai Nguyen',
+  username: 'ncdai',
+  role: ROLE.MANAGER
+}
