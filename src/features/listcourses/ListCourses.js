@@ -49,7 +49,6 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
       <Space size='middle'>
         <Button onClick={()=>showDrawer(record)}>Edit</Button>
         <Button onClick={()=>{deleteCourse(record)}}>Delete</Button>
-        <a>Xem đánh giá</a>
       </Space>
     )
   }
