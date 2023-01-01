@@ -11,11 +11,3 @@ export const sampleApi = {
     return axiosClientJava.get(url)
   }
 }
-
-
-export const userApi = {
-  getAllUserApi() {
-    const url = '/api/user/all'
-    return axiosClient.get(url)
-  }
-}

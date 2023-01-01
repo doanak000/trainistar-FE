@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY } from '../../constants/common'
+import { AUTH_ROLE_KEY, AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY } from '../../constants/common'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -11,6 +11,10 @@ export const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.isLoggedIn = true
       state.currentUser = action.payload
+
+      localStorage.setItem(AUTH_TOKEN_KEY, 'GXr1Vb6wk98dP+P9')
+      localStorage.setItem(AUTH_USER_DATA_KEY, JSON.stringify(action.payload))
+      localStorage.setItem(AUTH_ROLE_KEY, action.payload.role)
     },
 
     loginFail: (state, action) => {
@@ -23,6 +27,7 @@ export const authSlice = createSlice({
       state.currentUser = null
       localStorage.removeItem(AUTH_TOKEN_KEY)
       localStorage.removeItem(AUTH_USER_DATA_KEY)
+      localStorage.removeItem(AUTH_ROLE_KEY)
     }
   }
 })

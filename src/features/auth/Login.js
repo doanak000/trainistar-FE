@@ -48,17 +48,11 @@ const Login = () => {
         throw new Error('Failed to login')
       }
 
-      const accessToken = 'GXr1Vb6wk98dP+P9'
       const user = {
         username: values.username,
         fullName: data.name,
         role: data.role
       }
-
-      localStorage.setItem(AUTH_TOKEN_KEY, accessToken)
-      localStorage.setItem(AUTH_ROLE_KEY, user.role)
-      localStorage.setItem(AUTH_USER_DATA_KEY, JSON.stringify(user))
-
       dispatch(authActions.loginSuccess(user))
       history.replace(_.get(history, 'location.state.from') || '/')
 
