@@ -3,21 +3,25 @@ import Login from '../features/auth/Login'
 import { sampleApi } from '../api'
 import { Spin } from 'antd'
 
-const Activity = ({ activity }) => {
+const Courses = ({ courses = [] }) => {
   return (
     <div>
-      <code>{JSON.stringify(activity)}</code>
+      {courses.map((course) => (
+        <div key={course.id}>
+          {JSON.stringify(course)}
+        </div>
+      ))}
     </div>
   )
 }
 
 const HomePage = () => {
-  const [activity, setActivity] = useState(null)
+  const [courses, setCourses] = useState(null)
   const [isFetching, setIsFetching] = useState(true) // Init Loading State
 
   const fetchData = async () => {
     try {
-      const { success, data } = await sampleApi.getActivity()
+      const { success, data } = await sampleApi.getCourses()
 
       if (!success) {
         throw new Error(data)
@@ -25,11 +29,12 @@ const HomePage = () => {
 
       // Handle Success
       console.log('Success', data)
-      setActivity(data)
+      setCourses(data)
 
     } catch (error) {
       // Handle Error
       console.error('Error', error.message)
+      setCourses([])
     } finally {
       setIsFetching(false)
     }
@@ -43,7 +48,7 @@ const HomePage = () => {
     <div>
       <h1>HomePage</h1>
       <div>
-        {isFetching ? <Spin /> : <Activity activity={activity} />}
+        {isFetching ? <Spin /> : <Courses courses={courses} />}
       </div>
     </div>
   )

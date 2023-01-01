@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-// ASP.NET API
-const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+// Java API
+const axiosClientJava = axios.create({
+  baseURL: process.env.REACT_APP_JAVA_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
-axiosClient.interceptors.request.use(async (config) => {
+axiosClientJava.interceptors.request.use(async (config) => {
   // const Authorization = getAuthorization()
   // if (Authorization) {
   //   config.headers.Authorization = Authorization
@@ -16,7 +16,7 @@ axiosClient.interceptors.request.use(async (config) => {
   return config
 })
 
-axiosClient.interceptors.response.use((response) => {
+axiosClientJava.interceptors.response.use((response) => {
   return {
     success: true,
     data: response?.data ?? response
@@ -28,4 +28,4 @@ axiosClient.interceptors.response.use((response) => {
   }
 })
 
-export default axiosClient
+export default axiosClientJava
