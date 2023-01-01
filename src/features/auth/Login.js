@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { loginFail, loginSuccess } from './loginSlice'
-// import {  useLocation } from 'react-router-dom'
-// import { Notification } from '../../components/Notification/Notification'
-// import { NOTIFICATION_TYPE } from '../../constants/common'
-// import { selectTranslation } from '../language/languageSlice'
-import { Form, Input, Checkbox } from 'antd'
+import { Notification } from '../../components/Notification/Notification'
+import { Form, Input, Checkbox, notification } from 'antd'
 import {
   LoginButton,
   LoginLable,
@@ -15,10 +10,12 @@ import {
 } from './Login.style'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, useHistory } from 'react-router-dom'
-import { AUTH_ROLE_KEY, AUTH_TOKEN_KEY, FAKE_USER, NOTIFICATION_TYPE, PATH, ROLE } from '../../constants/common'
+import { AUTH_ROLE_KEY, AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY, PATH, ROLE } from '../../constants/common'
 import { translation } from '../../configs/translation'
 import { authActions, selectIsLoggedIn } from './authSlice'
 import { delay } from '../../utils'
+import { authApi } from '../../api'
+import _ from 'lodash'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -29,32 +26,55 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const isLoggedIn = !!localStorage.getItem(AUTH_TOKEN_KEY)
+    const token = localStorage.getItem(AUTH_TOKEN_KEY)
+    const user = JSON.parse(localStorage.getItem(AUTH_USER_DATA_KEY))
+    const isLoggedIn = !!token && !!user
+
     if (isLoggedIn) {
       history.push(PATH.HOME)
     } else {
       setIsCheckingToken(false)
     }
+    //
   }, [history])
 
   const handleFinish = async (values) => {
-    console.log('handleFinish', values)
+    try {
+      setIsLoading(true)
 
-    setIsLoading(true)
+      const { success, data } = await authApi.login(values.username, values.password)
 
-    await delay()
+      if (!success || data.code !== '1') {
+        throw new Error('Failed to login')
+      }
 
-    const accessToken = 'GXr1Vb6wk98dP+P9'
-    const role = FAKE_USER.role
+      const accessToken = 'GXr1Vb6wk98dP+P9'
+      const user = {
+        username: values.username,
+        fullName: data.name,
+        role: data.role
+      }
 
-    localStorage.setItem(AUTH_TOKEN_KEY, accessToken)
-    localStorage.setItem(AUTH_ROLE_KEY, role)
+      localStorage.setItem(AUTH_TOKEN_KEY, accessToken)
+      localStorage.setItem(AUTH_ROLE_KEY, user.role)
+      localStorage.setItem(AUTH_USER_DATA_KEY, JSON.stringify(user))
 
-    dispatch(authActions.loginSuccess(FAKE_USER))
+      dispatch(authActions.loginSuccess(user))
+      history.replace(_.get(history, 'location.state.from') || '/')
 
-    setIsLoading(false)
+    } catch (error) {
+      console.log(error)
 
-    history.replace(history.location.state?.from ?? '/')
+      dispatch(authActions.loginFail())
+
+      notification.error({
+        message: 'Login failed',
+        description: error.message
+      })
+
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleFinishFailed = (errorInfo) => {

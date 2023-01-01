@@ -2,7 +2,7 @@ import { Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, useLocation } from 'react-router-dom'
-import { AUTH_TOKEN_KEY, FAKE_USER, PATH, ROUTES } from '../constants/common'
+import { AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY, PATH, ROUTES } from '../constants/common'
 import LayoutAdmin from '../containers/layout/Layout'
 import { authActions, selectIsLoggedIn } from '../features/auth/authSlice'
 
@@ -18,10 +18,14 @@ export const PrivateRoute = (props) => {
     console.log('Checking token...')
 
     const token = localStorage.getItem(AUTH_TOKEN_KEY)
-    if (token) {
-      dispatch(authActions.loginSuccess(FAKE_USER))
+    const user = JSON.parse(localStorage.getItem(AUTH_USER_DATA_KEY))
+
+    if (token && user) {
+      dispatch(authActions.loginSuccess(user))
     }
+
     setIsCheckingToken(false)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

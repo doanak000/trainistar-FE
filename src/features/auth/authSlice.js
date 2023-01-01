@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { AUTH_TOKEN_KEY } from '../../constants/common'
+import { AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY } from '../../constants/common'
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLoggedIn: false,
-    currentUser: null,
-    message: ''
+    currentUser: null
   },
   reducers: {
     loginSuccess: (state, action) => {
@@ -16,13 +15,14 @@ export const authSlice = createSlice({
 
     loginFail: (state, action) => {
       state.isLoggedIn = false
-      state.message = action.payload
+      state.currentUser = null
     },
 
     logout: (state) => {
       state.isLoggedIn = false
       state.currentUser = null
       localStorage.removeItem(AUTH_TOKEN_KEY)
+      localStorage.removeItem(AUTH_USER_DATA_KEY)
     }
   }
 })
@@ -33,7 +33,6 @@ export const authActions = authSlice.actions
 // Selectors
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn
 export const selectCurrentUser = (state) => state.auth.currentUser
-export const selectMessage = (state) => state.auth.message
 
 // Reducer
 const authReducer = authSlice.reducer

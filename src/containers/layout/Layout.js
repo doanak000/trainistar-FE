@@ -25,7 +25,7 @@ import { confirm } from '../../components/ConfirmModal/ConfirmModal'
 import { PATH, SIDEBAR } from '../../constants/common'
 import { Link, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { authActions } from '../../features/auth/authSlice'
+import { authActions, selectCurrentUser } from '../../features/auth/authSlice'
 import { selectTranslation } from '../../features/language/languageSlice'
 
 const LayoutAdmin = ({ children }) => {
@@ -36,6 +36,8 @@ const LayoutAdmin = ({ children }) => {
   const location = useLocation()
   const translation = useSelector(selectTranslation)
   const [tabName, setTabName] = useState(translation.TAB_LISTCOURSEPAGE)
+
+  const currentUser = useSelector(selectCurrentUser)
 
   useEffect(() => {
     setSelectedKey(location.pathname)
@@ -137,9 +139,9 @@ const LayoutAdmin = ({ children }) => {
             <Avatar
               size='default'
               icon={<UserOutlined />}
-              style={{ color: theme.colors.primary }}
+              style={{ backgroundColor: theme.colors.primary }}
             />
-            <DisplayName>Dai Nguyen</DisplayName>
+            <DisplayName>{currentUser.fullName}</DisplayName>
           </UserInfo>
         </CustomHeader>
         <CustomContent>{children}</CustomContent>

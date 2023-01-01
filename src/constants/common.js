@@ -55,9 +55,4 @@ export const CREATE_UPDATE_DELETE_STATUS = Object.freeze({
 
 export const AUTH_TOKEN_KEY = '@Trainistar:AUTH_TOKEN'
 export const AUTH_ROLE_KEY = '@Trainistar:AUTH_ROLE'
-
-export const FAKE_USER = {
-  fullName: 'Dai Nguyen',
-  username: 'ncdai',
-  role: ROLE.MANAGER
-}
+export const AUTH_USER_DATA_KEY = '@Trainistar:AUTH_USER_DATA'
