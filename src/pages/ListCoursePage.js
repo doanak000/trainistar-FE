@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import ListCourses from '../features/listcourses/ListCourses'
 import { courseApi, sampleApi, userApi } from '../api'
 import { Spin,notification, Button, Form, Input, Drawer, Select } from 'antd'
+import { NOTIFICATION_TYPE } from '../constants/common'
+import { Notification } from '../components/Notification/Notification'
 const Context = React.createContext({
   name: 'Default'
 })
@@ -49,7 +51,10 @@ const ListCoursePage = () => {
       if (!success) {
         throw new Error(data)
       }
-      data.code === '-1' && window.alert('Courses having student. Cant delete')
+       data.code === '-1' &&  Notification({
+            type: NOTIFICATION_TYPE.ERROR,
+            message: 'Courses having student. Can not delete'
+          })
       fetchData()
     } catch (error) {
       // Handle Error
@@ -65,7 +70,10 @@ const ListCoursePage = () => {
       if (!success) {
         throw new Error(data)
       }
-      window.alert(data?.message || 'failed')
+      Notification({
+            type: NOTIFICATION_TYPE.INFO,
+            message: data?.message
+          })
       fetchData()
     } catch (error) {
       // Handle Error

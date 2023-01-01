@@ -13,9 +13,4 @@ export const sampleApi = {
 }
 
 
-export const userApi = {
-  getAllUserApi() {
-    const url = '/api/user/all'
-    return axiosClient.get(url)
-  }
-}
+
