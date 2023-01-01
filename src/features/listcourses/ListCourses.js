@@ -1,17 +1,19 @@
-import { Button, Drawer, Form, Input, Space, Table, Tag } from 'antd'
+import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from 'antd'
 import React, { useState } from 'react'
 
 
-const ListCourses = () => {
+const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) => {
    const [open, setOpen] = useState(false)
-  const showDrawer = () => {
-    console.log('fdf')
+   const [currentCourseDrawer,setCurrentCouseDrawer] = useState(null)
+  const showDrawer = (record) => {
+    setCurrentCouseDrawer(record)
     setOpen(true)
   }
   const onClose = () => {
     setOpen(false)
   }
-    const onFinish = (values) => {
+  const onFinish = (values) => {
+    updateCourseById(currentCourseDrawer?.idCourse,values)
     console.log('Success:', values)
         setOpen(false)
   }
@@ -20,7 +22,6 @@ const ListCourses = () => {
     console.log('Failed:', errorInfo)
         setOpen(false)
   }
-
 
   const columns = [
   {
@@ -31,7 +32,7 @@ const ListCourses = () => {
   },
   {
     title: 'Teacher',
-    dataIndex: 'teacher',
+    dataIndex: 'teacherName',
     key: 'teacher',
      render: (text) => <a>{text}</a>
   },
@@ -46,46 +47,18 @@ const ListCourses = () => {
     key: 'action',
     render: (_, record) => (
       <Space size='middle'>
-        <Button onClick={showDrawer}>Edit</Button>
-        <Button>Delete</Button>
+        <Button onClick={()=>showDrawer(record)}>Edit</Button>
+        <Button onClick={()=>{deleteCourse(record)}}>Delete</Button>
         <a>Xem đánh giá</a>
       </Space>
     )
   }
 ]
-  const data = [
-  {
-    key: '1',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  },
-  {
-    key: '2',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '3',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '4',
-    nameCourse: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }, {
-    key: '5',
-    name: 'ABC',
-    teacher: 'doan',
-    description: 'khoa hoc ve ... '
-  }
-]
+
 return (
   <>
-       <Table columns={columns} dataSource={data} />
-        <Drawer title='Basic Drawer' placement='right' onClose={onClose} open={open}>
+       <Table columns={columns} dataSource={listCourses} />
+        <Drawer title='Update Courses' placement='right' onClose={onClose} open={open}>
            <Form
               name='basic'
               labelCol={{ span: 8 }}
@@ -98,20 +71,23 @@ return (
               <Form.Item
                 label='Course'
                 name='nameCourse'
+                initialValue={currentCourseDrawer?.nameCourse}
               >
                 <Input />
               </Form.Item>
 
               <Form.Item
                 label='Teacher'
-                name='teacher'
+                name='idTeacher'
+                initialValue={currentCourseDrawer?.idTeacher}
               >
-                <Input />
+                <Select options={optionTeacher} />
               </Form.Item>
 
               <Form.Item
                 label='Description'
                 name='description'
+                initialValue={currentCourseDrawer?.description}
               >
                 <Input />
               </Form.Item>
