@@ -1,14 +1,23 @@
-import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from 'antd'
 import React, { useState } from 'react'
+import { Button, Card, Drawer, Form, Input, Modal, Select, Space, Table, Tag } from 'antd'
+import { userApi } from '../../api'
 
+const checkTypeStudent = (mark)=> {
+  if (mark >= 8.5) return 'Good'
+  if (mark >= 7) return 'Rather' 
+  if (mark >=5.5) return 'Medium'
+  if (mark >=4) return 'Bad'
+  return 'Jitney'
+}
 const ListUsers = ({
   listUsers,
   deleteUser,
-  updateUserById,
-  optionTeacher
+  updateUser
 }) => {
   const [open, setOpen] = useState(false)
   const [currentUserDrawer, setCurrentUserDrawer] = useState(null)
+  const [currentUserModal, setCurrentUserModal] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const showDrawer = (record) => {
     setCurrentUserDrawer(record)
     setOpen(true)
@@ -17,7 +26,7 @@ const ListUsers = ({
     setOpen(false)
   }
   const onFinish = (values) => {
-    updateUserById(currentUserDrawer?.idUser, values)
+    // updateUser(currentUserDrawer?.idUser, values)
     console.log('Success:', values)
     setOpen(false)
   }
@@ -25,6 +34,20 @@ const ListUsers = ({
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
     setOpen(false)
+  }
+
+  const showModal = async (record) => {
+    const { success, data } = await userApi.courseHistory(record.idUser)
+    setCurrentUserModal(data)
+    setIsModalOpen(true)
+  }
+
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false)
   }
 
   const columns = [
@@ -65,6 +88,7 @@ const ListUsers = ({
           >
             Delete
           </Button>
+          {record.typeUser === 1 && <Button onClick={()=> showModal(record)}> Detail Student </Button> }
         </Space>
       )
     }
@@ -134,6 +158,15 @@ const ListUsers = ({
           </Form.Item>
         </Form>
       </Drawer>
+      <Modal title='Student Info' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        {currentUserModal.map((item,index)=>{
+          return (<Card title={item.nameCourse} key={index}>
+            <p>Point: {item.mark}</p>
+            <p>Type Student: {checkTypeStudent(item.mark)}</p>
+        </Card>)
+        })
+       }
+      </Modal>
     </>
   )
 }

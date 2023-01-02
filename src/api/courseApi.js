@@ -16,5 +16,9 @@ export const courseApi = {
   createCourse(data) {
     const url = '/api/course/createcourse'
     return axiosClient.post(url, { data })
+  },
+  getTotalStudentByTime(data) {
+    const url = `/api/course_student/totalstudents/${data}`
+    return axiosClient.get(url)
   }
 }

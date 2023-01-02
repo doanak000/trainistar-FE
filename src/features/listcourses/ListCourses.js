@@ -1,10 +1,13 @@
-import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from 'antd'
-import React, { useState } from 'react'
+import { Button, Drawer, Form, Input, Radio, Select, Space, Table, Tag } from 'antd'
+import React, { useState , useEffect } from 'react'
 
+import { courseApi } from '../../api'
 
 const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) => {
    const [open, setOpen] = useState(false)
    const [currentCourseDrawer,setCurrentCouseDrawer] = useState(null)
+   const [typeManage,setTypeManage] = useState('month')
+   const [listManageCourses,setListManageCourses] = useState(null)
   const showDrawer = (record) => {
     setCurrentCouseDrawer(record)
     setOpen(true)
@@ -21,6 +24,19 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
         setOpen(false)
+  }
+
+  const handleChangeTypeManage =  (e) => {
+    setTypeManage(e.target.value)
+    fetchTotalStudentByTime(e.target.value)
+  }
+
+  const fetchTotalStudentByTime = async (time) => {
+    const { success, data } = await courseApi.getTotalStudentByTime(time)
+      if (!success) {
+        throw new Error(data)
+      }
+      setListManageCourses(data)
   }
 
   const columns = [
@@ -53,10 +69,42 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
     )
   }
 ]
+  const columnsManage = [
+  {
+    title: 'Courses',
+    dataIndex: 'nameCourse',
+    key: 'name',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Total Students',
+    dataIndex: 'TotalStudents',
+    key: 'TotalStudents',
+     render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Month',
+    dataIndex: 'Month',
+    key: 'Month',
+     render: (text) => <a>{text}</a>
+  }
+]
+  useEffect(
+    fetchTotalStudentByTime(typeManage)
+  ,[])
 
 return (
   <>
-       <Table columns={columns} dataSource={listCourses} />
+       <Table columns={columns} dataSource={listCourses}></Table>
+       <div style={{paddingTop: '20px'}}>
+          <Radio.Group value={typeManage} onChange={handleChangeTypeManage}>
+            <Radio.Button value='month'>Month</Radio.Button>
+            <Radio.Button value='quarter'>Quarter</Radio.Button>
+            <Radio.Button value='year'>Year</Radio.Button>
+          </Radio.Group>
+          <Table columns={columnsManage} dataSource={listManageCourses}></Table>
+       </div>
+
         <Drawer title='Update Courses' placement='right' onClose={onClose} open={open}>
            <Form
               name='basic'

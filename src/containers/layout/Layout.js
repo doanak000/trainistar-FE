@@ -3,6 +3,7 @@ import { Avatar, Layout } from 'antd'
 import {
   // MenuUnfoldOutlined,
   // MenuFoldOutlined,
+  BookOutlined,
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
@@ -85,13 +86,24 @@ const LayoutAdmin = ({ children }) => {
           </CustomMenuItem>
           <CustomMenuItem
             key={SIDEBAR.LISTCOURSEPAGE}
-            icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
+            icon={<BookOutlined style={{ fontSize: theme.sizes.M }} />}
           >
             <Link
               to={PATH.LISTCOURSEPAGE}
               onClick={() => selectTabName(translation.TAB_LISTCOURSEPAGE)}
             >
-              {translation.TAB_LISTCOURSEPAGE}
+              LIST COURSE
+            </Link>
+          </CustomMenuItem>
+          <CustomMenuItem
+            key={SIDEBAR.USER}
+            icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
+          >
+            <Link
+              to={PATH.USER}
+              onClick={() => selectTabName(translation.TAB_LISTCOURSEPAGE)}
+            >
+              MANAGE USER
             </Link>
           </CustomMenuItem>
           <CustomMenuItem

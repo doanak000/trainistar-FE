@@ -13,7 +13,6 @@ const App = () => {
       >
         <Switch>
           {PublicRoutes}
-
           <PrivateRoute path='/admin'>
             <LayoutAdmin>
               {PrivateRoutes}
