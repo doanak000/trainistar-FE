@@ -157,6 +157,12 @@ const ListUsers = ({
           >
             <Input type='number' style={{width: '100%'}}/>
           </Form.Item>
+          <Form.Item 
+            label='Type User (1: Student, 2: Teacher)' 
+            name='typeUser' 
+          >
+            <InputNumber max={2} min={1} style={{width: '100%'}}/>
+          </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type='primary' htmlType='submit'>

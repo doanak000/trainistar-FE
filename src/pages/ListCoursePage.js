@@ -135,7 +135,7 @@ const ListCoursePage = () => {
   return (
     <div>
       <h1>ListCoursePage</h1>
-      <Button onClick={showDrawerCreateCourse}>Create new course</Button>
+      <Button onClick={showDrawerCreateCourse} style={{marginBottom: '20px'}}>Create new course</Button>
       <div>
         {isFetching ? <Spin /> : <ListCourses listCourses={listCourses} deleteCourse={deleteCourse} 
         updateCourseById={updateCourseById} optionTeacher={optionTeacher} 

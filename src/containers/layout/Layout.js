@@ -107,14 +107,14 @@ const LayoutAdmin = ({ children }) => {
             </Link>
           </CustomMenuItem>
           <CustomMenuItem
-            key={SIDEBAR.EVENT}
+            key={SIDEBAR.NOTI}
             icon={<VideoCameraOutlined style={{ fontSize: theme.sizes.M }} />}
           >
             <Link
-              to={PATH.EVENT}
-              onClick={() => selectTabName(translation.TAB_EVENT)}
+              to={PATH.NOTI}
+              onClick={() => selectTabName('NOTIFICATION')}
             >
-              {translation.TAB_EVENT}
+              NOTIFICATION
             </Link>
           </CustomMenuItem>
           <CustomMenuItem

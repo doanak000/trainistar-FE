@@ -107,7 +107,7 @@ const ListUserPage = () => {
   return (
     <div>
       <h1>List User Page</h1>
-      <Button onClick={showDrawerCreateUser}>Create new user</Button>
+      <Button onClick={showDrawerCreateUser} style={{marginBottom: '20px'}}>Create new user</Button>
       <div>
         {isFetching ? (
           <Spin />
@@ -182,6 +182,12 @@ const ListUserPage = () => {
           </Form.Item>
           <Form.Item label='Phone Number' name='phoneNumber'>
             <InputNumber style={{width: '100%'}}/>
+          </Form.Item>
+          <Form.Item 
+            label='Type User (1: Student, 2: Teacher)' 
+            name='typeUser' 
+          >
+            <InputNumber max={2} min={1} style={{width: '100%'}} defaultValue={1}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

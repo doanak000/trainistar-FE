@@ -1,6 +1,6 @@
 export const PATH = Object.freeze({
   LISTCOURSEPAGE: '/admin/listcourse',
-  EVENT: '/admin/event',
+  NOTI: '/admin/noti',
   VIDEO: '/admin/video',
   LOGIN: '/login',
   HOME: '/admin',
@@ -10,7 +10,7 @@ export const PATH = Object.freeze({
 export const SIDEBAR = Object.freeze({
   HOME: PATH.HOME,
   LISTCOURSEPAGE: PATH.LISTCOURSEPAGE,
-  EVENT: PATH.EVENT,
+  NOTI: PATH.NOTI,
   VIDEO: PATH.VIDEO,
   USER: PATH.USER,
   LOGOUT: 'logout'
@@ -27,7 +27,7 @@ export const ROUTES = Object.freeze({
   PRIVATE: [
     { path: PATH.HOME, exact: true, component: 'HomePage' },
     { path: PATH.LISTCOURSEPAGE, component: 'ListCoursePage' },
-    { path: PATH.EVENT, component: 'EventPage' },
+    { path: PATH.NOTI, component: 'NotificationPage' },
     { path: PATH.VIDEO, component: 'VideoPage' },
     { path: PATH.USER, component: 'UserPage'}
   ],
