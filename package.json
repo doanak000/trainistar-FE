@@ -29,7 +29,7 @@
     "yarn": "^1.22.10"
   },
   "scripts": {
-    "start": "cp .env.staging .env && yarn eslint-fix && craco start",
+    "start": "cp .env.staging .env && craco start",
     "build": "cp .env.production .env && craco build",
     "build-stag": "cp .env.staging .env && craco build",
     "test": "craco test",

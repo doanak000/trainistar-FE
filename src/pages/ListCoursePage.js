@@ -13,6 +13,7 @@ const ListCoursePage = () => {
   const [isFetching, setIsFetching] = useState(true) // Init Loading State
   const [optionTeacher,setOptionTeacher] = useState(null)
   const [openDrawerCreateCourse, setOpenDrawerCreateCourse] = useState(false)
+  const [listManageCourses,setListManageCourses] = useState(null)
   const showDrawerCreateCourse = () => {
     setOpenDrawerCreateCourse(true)
   }
@@ -24,15 +25,12 @@ const ListCoursePage = () => {
     console.log('Failed:', errorInfo)
         setOpenDrawerCreateCourse(false)
   }
-  const [api, contextHolder] = notification.useNotification()
   const fetchData = async () => {
     try {
       const { success, data } = await courseApi.getListCourseApi()
-
       if (!success) {
         throw new Error(data)
       }
-
       // Handle Success
       console.log('Success', data)
       setListCourses(data)
@@ -116,9 +114,22 @@ const ListCoursePage = () => {
     setOpenDrawerCreateCourse(false)
   }
 
+  const fetchTotalStudentByTime = async (time) => {
+    try {
+    const { success, data } = await courseApi.getTotalStudentByTime(time)
+      if (!success) {
+        throw new Error(data)
+      }
+      setListManageCourses(data) 
+    } catch (error) {
+      // Handle Error
+      console.error('Error', error?.message)
+  }
+}
   useEffect(() => {
     fetchData()
     fetchListTeacher()
+    fetchTotalStudentByTime('month')
   }, [])
 
   return (
@@ -126,7 +137,9 @@ const ListCoursePage = () => {
       <h1>ListCoursePage</h1>
       <Button onClick={showDrawerCreateCourse}>Create new course</Button>
       <div>
-        {isFetching ? <Spin /> : <ListCourses listCourses={listCourses} deleteCourse={deleteCourse} updateCourseById={updateCourseById} optionTeacher={optionTeacher}/>}
+        {isFetching ? <Spin /> : <ListCourses listCourses={listCourses} deleteCourse={deleteCourse} 
+        updateCourseById={updateCourseById} optionTeacher={optionTeacher} 
+        fetchTotalStudentByTime={fetchTotalStudentByTime} listManageCourses={listManageCourses}/>}
       </div>
         <Drawer title='Create Courses' placement='right' onClose={onCloseDrawerCreateCourse} open={openDrawerCreateCourse}>
            <Form

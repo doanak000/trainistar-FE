@@ -181,7 +181,7 @@ const ListUserPage = () => {
             <Input />
           </Form.Item>
           <Form.Item label='Phone Number' name='phoneNumber'>
-            <InputNumber />
+            <InputNumber style={{width: '100%'}}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

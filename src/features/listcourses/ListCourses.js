@@ -3,14 +3,24 @@ import React, { useState , useEffect } from 'react'
 
 import { courseApi } from '../../api'
 
-const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) => {
+const dataTimeRender = (time) => {
+  if(time==='month') return 'Month'
+  if(time==='year') return 'Years'
+  if(time==='quarter') return 'Quarters'
+  return 'Month'
+}
+
+const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher,fetchTotalStudentByTime,listManageCourses}) => {
    const [open, setOpen] = useState(false)
    const [currentCourseDrawer,setCurrentCouseDrawer] = useState(null)
    const [typeManage,setTypeManage] = useState('month')
-   const [listManageCourses,setListManageCourses] = useState(null)
-  const showDrawer = (record) => {
-    setCurrentCouseDrawer(record)
+  const [form] = Form.useForm()
+  const showDrawer = (_) => {
+    setCurrentCouseDrawer(_)
     setOpen(true)
+    form.setFieldsValue(
+      {..._}
+    )
   }
   const onClose = () => {
     setOpen(false)
@@ -29,14 +39,6 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
   const handleChangeTypeManage =  (e) => {
     setTypeManage(e.target.value)
     fetchTotalStudentByTime(e.target.value)
-  }
-
-  const fetchTotalStudentByTime = async (time) => {
-    const { success, data } = await courseApi.getTotalStudentByTime(time)
-      if (!success) {
-        throw new Error(data)
-      }
-      setListManageCourses(data)
   }
 
   const columns = [
@@ -63,7 +65,7 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
     key: 'action',
     render: (_, record) => (
       <Space size='middle'>
-        <Button onClick={()=>showDrawer(record)}>Edit</Button>
+        <Button onClick={()=>showDrawer(_)}>Edit</Button>
         <Button onClick={()=>{deleteCourse(record)}}>Delete</Button>
       </Space>
     )
@@ -83,15 +85,12 @@ const ListCourses = ({listCourses,deleteCourse,updateCourseById,optionTeacher}) 
      render: (text) => <a>{text}</a>
   },
   {
-    title: 'Month',
-    dataIndex: 'Month',
-    key: 'Month',
-     render: (text) => <a>{text}</a>
+    title: dataTimeRender(typeManage),
+    dataIndex: dataTimeRender(typeManage),
+    key: dataTimeRender(typeManage),
+    render: (text) => <a>{text}</a>
   }
 ]
-  useEffect(
-    fetchTotalStudentByTime(typeManage)
-  ,[])
 
 return (
   <>
@@ -114,11 +113,11 @@ return (
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete='off'
+              form={form}
             >
               <Form.Item
                 label='Course'
                 name='nameCourse'
-                initialValue={currentCourseDrawer?.nameCourse}
               >
                 <Input />
               </Form.Item>
@@ -126,7 +125,6 @@ return (
               <Form.Item
                 label='Teacher'
                 name='idTeacher'
-                initialValue={currentCourseDrawer?.idTeacher}
               >
                 <Select options={optionTeacher} />
               </Form.Item>
@@ -134,7 +132,6 @@ return (
               <Form.Item
                 label='Description'
                 name='description'
-                initialValue={currentCourseDrawer?.description}
               >
                 <Input />
               </Form.Item>

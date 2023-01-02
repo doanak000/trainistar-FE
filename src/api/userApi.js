@@ -15,7 +15,7 @@ export const userApi = {
   },
   courseHistory(id) {
     const url = `/api/course_student/history/${id}`
-    return axiosClient.post(url)  
+    return axiosClient.get(url)  
   }
 
 }

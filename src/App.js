@@ -18,6 +18,7 @@ const App = () => {
               {PrivateRoutes}
             </LayoutAdmin>
           </PrivateRoute>
+          <Redirect to={PATH.HOME} />
         </Switch>
       </Suspense>
     </Router>

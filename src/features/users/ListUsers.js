@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Drawer, Form, Input, Modal, Select, Space, Table, Tag } from 'antd'
+import { Button, Card, Drawer, Form, Input, InputNumber, Modal, Select, Space, Table, Tag } from 'antd'
 import { userApi } from '../../api'
 
 const checkTypeStudent = (mark)=> {
@@ -9,6 +9,7 @@ const checkTypeStudent = (mark)=> {
   if (mark >=4) return 'Bad'
   return 'Jitney'
 }
+
 const ListUsers = ({
   listUsers,
   deleteUser,
@@ -18,9 +19,13 @@ const ListUsers = ({
   const [currentUserDrawer, setCurrentUserDrawer] = useState(null)
   const [currentUserModal, setCurrentUserModal] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const showDrawer = (record) => {
-    setCurrentUserDrawer(record)
+  const [form] = Form.useForm()
+  const showDrawer = (_) => {
+    setCurrentUserDrawer(_)
     setOpen(true)
+    form.setFieldsValue(
+      {..._}
+    )
   }
   const onClose = () => {
     setOpen(false)
@@ -80,7 +85,7 @@ const ListUsers = ({
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Button onClick={() => showDrawer(record)}>Edit</Button>
+          <Button onClick={() => showDrawer(_)}>Edit</Button>
           <Button
             onClick={() => {
               deleteUser(record)
@@ -111,11 +116,11 @@ const ListUsers = ({
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
+          form={form}
         >
           <Form.Item
             label='User Name'
             name='userName'
-            initialValue={currentUserDrawer?.userName}
           >
             <Input />
           </Form.Item>
@@ -123,7 +128,6 @@ const ListUsers = ({
           <Form.Item
             label='First Name'
             name='firstName'
-            initialValue={currentUserDrawer?.firstName}
           >
             <Input />
           </Form.Item>
@@ -131,7 +135,6 @@ const ListUsers = ({
           <Form.Item
             label='Last Name'
             name='lastName'
-            initialValue={currentUserDrawer?.lastName}
           >
             <Input />
           </Form.Item>
@@ -139,7 +142,6 @@ const ListUsers = ({
           <Form.Item
             label='Email'
             name='email'
-            initialValue={currentUserDrawer?.email}
             rules={[
               {
                 type: 'email',
@@ -148,6 +150,12 @@ const ListUsers = ({
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item 
+            label='Phone Number' 
+            name='phoneNumber' 
+          >
+            <Input type='number' style={{width: '100%'}}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -159,11 +167,11 @@ const ListUsers = ({
         </Form>
       </Drawer>
       <Modal title='Student Info' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        {currentUserModal.map((item,index)=>{
-          return (<Card title={item.nameCourse} key={index}>
+        {currentUserModal?.map((item,index)=>{
+          return (<div style={{paddingBottom: '10px'}} key={index}><Card title={item.nameCourse} >
             <p>Point: {item.mark}</p>
             <p>Type Student: {checkTypeStudent(item.mark)}</p>
-        </Card>)
+        </Card></div>)
         })
        }
       </Modal>
