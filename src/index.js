@@ -19,7 +19,8 @@ ReactDOM.render(
       <ConfigProvider theme={{
         token: {
           colorPrimary: theme.colors.primary,
-          borderRadius: 4
+          borderRadius: 4,
+          fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif'
         }
       }}>
         <ThemeProvider theme={theme}>
