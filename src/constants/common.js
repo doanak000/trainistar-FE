@@ -7,6 +7,11 @@ export const PATH = Object.freeze({
   USER: '/admin/user'
 })
 
+export const PATH_STUDENT = Object.freeze({
+  HOME: '/',
+  SEARCH: '/search'
+})
+
 export const SIDEBAR = Object.freeze({
   HOME: PATH.HOME,
   LISTCOURSEPAGE: PATH.LISTCOURSEPAGE,
@@ -14,6 +19,11 @@ export const SIDEBAR = Object.freeze({
   VIDEO: PATH.VIDEO,
   USER: PATH.USER,
   LOGOUT: 'logout'
+})
+
+export const SIDEBAR_STUDENT = Object.freeze({
+  HOME: PATH_STUDENT.HOME,
+  SEARCH: PATH_STUDENT.SEARCH
 })
 
 export const ROLE = Object.freeze({
@@ -30,7 +40,11 @@ export const ROUTES = Object.freeze({
     { path: PATH.NOTI, component: 'NotificationPage' },
     { path: PATH.USER, component: 'UserPage' }
   ],
-  PUBLIC: [{ path: PATH.LOGIN, component: 'LoginPage' }]
+  PUBLIC: [{ path: PATH.LOGIN, component: 'LoginPage' }],
+  STUDENT: [
+    { path: PATH_STUDENT.HOME, exact: true, component: 'student/HomePage' },
+    { path: PATH_STUDENT.SEARCH, component: 'student/SearchPage' }
+  ]
 })
 
 export const NOTIFICATION_TYPE = Object.freeze({
