@@ -13,6 +13,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "add": "^2.0.6",
+    "animate.css": "^4.1.1",
     "antd": "^5.1.2",
     "apollo-link": "^1.2.14",
     "axios": "^1.2.1",
