@@ -1,4 +1,4 @@
-import { HomeOutlined, LogoutOutlined, SearchOutlined } from '@ant-design/icons'
+import { HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu, Modal } from 'antd'
 
 import * as colors from '@ant-design/colors'
@@ -76,6 +76,14 @@ export const StudentLayout = ({ children }) => {
               icon: <SearchOutlined style={{ fontSize: theme.sizes.M }} />,
               onClick: () => {
                 history.push(PATH_STUDENT.SEARCH)
+              }
+            },
+            {
+              key: SIDEBAR_STUDENT.PROFILE,
+              label: 'Update Profile',
+              icon: <UserOutlined style={{ fontSize: theme.sizes.M }} />,
+              onClick: () => {
+                history.push(PATH_STUDENT.PROFILE)
               }
             },
             {

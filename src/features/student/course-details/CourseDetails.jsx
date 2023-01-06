@@ -31,7 +31,7 @@ const data = [
   }
 ]
 
-export const CourseDetails = () => {
+export const StudentCourseDetails = () => {
   const { id: courseId } = useParams()
 
   const [course, setCourse] = useState(null)
