@@ -1,5 +1,7 @@
 import axiosClient from './axiosClient'
 
+const prefix = '/api/course'
+
 export const courseApi = {
   getListCourseApi() {
     const url = '/api/course/all'
@@ -19,6 +21,11 @@ export const courseApi = {
   },
   getTotalStudentByTime(data) {
     const url = `/api/course_student/totalstudents/${data}`
+    return axiosClient.get(url)
+  },
+
+  search(keyword) {
+    const url = `${prefix}/searchname/${keyword}`
     return axiosClient.get(url)
   }
 }

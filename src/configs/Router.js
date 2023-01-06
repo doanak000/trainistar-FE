@@ -1,4 +1,4 @@
-import { notification } from 'antd'
+import { notification, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, useLocation } from 'react-router-dom'
@@ -51,7 +51,11 @@ export const PrivateRoute = (props) => {
   }, [])
 
   if (isCheckingToken) {
-    return null
+    return (
+      <div className='w-screen h-screen flex items-center justify-center'>
+        <Spin size='large' tip='Logging in...' />
+      </div>
+    )
   }
 
   if (!isLoggedIn) {
@@ -75,5 +79,9 @@ export const PublicRoutes = ROUTES.PUBLIC.map((route) => {
 })
 
 export const PrivateRoutes = ROUTES.PRIVATE.map((route) => (
+  <RouteRender key={route.component} {...route} />
+))
+
+export const StudentRoutes = ROUTES.STUDENT.map((route) => (
   <RouteRender key={route.component} {...route} />
 ))

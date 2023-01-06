@@ -30,6 +30,7 @@ module.exports = {
     'max-lines': ['error', 10000],
     'comma-dangle': ['error', 'never'],
     'no-process-env': 'off',
+    'no-unused-vars': 'warn',
     'prettier/prettier': [
       'error',
       {

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
-import { AdminLayout } from './containers/layout'
-import { PublicRoutes, PrivateRoutes, PrivateRoute } from './configs/Router'
+import { AdminLayout, StudentLayout } from './containers/layout'
+import { PublicRoutes, PrivateRoutes, PrivateRoute, StudentRoutes } from './configs/Router'
 import { PATH } from './constants/common'
 
 const App = () => {
@@ -17,6 +17,12 @@ const App = () => {
             <AdminLayout>
               {PrivateRoutes}
             </AdminLayout>
+          </PrivateRoute>
+
+          <PrivateRoute path='/'>
+            <StudentLayout>
+              {StudentRoutes}
+            </StudentLayout>
           </PrivateRoute>
 
           <Redirect to={PATH.HOME} />
