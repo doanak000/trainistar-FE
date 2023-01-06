@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'antd/dist/antd.less'
 import App from './App'
 import store from './app/store'
 import { Provider } from 'react-redux'
@@ -10,13 +9,24 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from './theme/theme'
 import { GlobalStyle } from './theme/globalStyles'
 
+import 'antd/dist/reset.css'
+import './tailwind.css'
+import { ConfigProvider } from 'antd'
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+      <ConfigProvider theme={{
+        token: {
+          colorPrimary: theme.colors.primary,
+          borderRadius: 4
+        }
+      }}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <App />
+        </ThemeProvider>
+      </ConfigProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

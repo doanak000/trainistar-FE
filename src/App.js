@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
-import Spinner from './components/spinner/Spinner'
-import LayoutAdmin from './containers/layout/Layout'
+import { AdminLayout } from './containers/layout'
 import { PublicRoutes, PrivateRoutes, PrivateRoute } from './configs/Router'
 import { PATH } from './constants/common'
 
@@ -13,11 +12,13 @@ const App = () => {
       >
         <Switch>
           {PublicRoutes}
+
           <PrivateRoute path='/admin'>
-            <LayoutAdmin>
+            <AdminLayout>
               {PrivateRoutes}
-            </LayoutAdmin>
+            </AdminLayout>
           </PrivateRoute>
+
           <Redirect to={PATH.HOME} />
         </Switch>
       </Suspense>

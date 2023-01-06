@@ -1,24 +1,18 @@
-const CracoLessPlugin = require('craco-less')
+const resolveUrlLoader = require('craco-resolve-url-loader')
 
 module.exports = {
   babel: {
     plugins: ['babel-plugin-styled-components', 'emotion']
   },
-  plugins: [
-    {
-      plugin: CracoLessPlugin,
-      options: {
-        lessLoaderOptions: {
-          lessOptions: {
-            modifyVars: {
-              '@primary-color': '#1890FF',
-              '@error-color': '#BF291E',
-              '@border-radius-base': '5px'
-            },
-            javascriptEnabled: true
-          }
-        }
-      }
+  plugins: [{
+    plugin: resolveUrlLoader
+  }],
+  style: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer')
+      ]
     }
-  ]
+  }
 }

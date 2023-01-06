@@ -1,21 +1,10 @@
+import { Button, Col, Form, Input, notification, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Notification } from '../../components/Notification/Notification'
-import { Form, Input, Checkbox, notification } from 'antd'
-import {
-  LoginButton,
-  LoginLable,
-  TitleLogin,
-  WrapperLogin,
-  WrapperLoginForm
-} from './Login.style'
-import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom'
-import { AUTH_ROLE_KEY, AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY, PATH, ROLE } from '../../constants/common'
-import { translation } from '../../configs/translation'
-import { authActions, selectIsLoggedIn } from './authSlice'
-import { delay } from '../../utils'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { authApi } from '../../api'
-import _ from 'lodash'
+import { AUTH_TOKEN_KEY, PATH } from '../../constants/common'
+import { authActions } from './authSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -26,16 +15,13 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY)
-    const user = JSON.parse(localStorage.getItem(AUTH_USER_DATA_KEY))
-    const isLoggedIn = !!token && !!user
+    const isLoggedIn = Boolean(localStorage.getItem(AUTH_TOKEN_KEY))
 
     if (isLoggedIn) {
       history.push(PATH.HOME)
     } else {
       setIsCheckingToken(false)
     }
-    //
   }, [history])
 
   const handleFinish = async (values) => {
@@ -44,35 +30,39 @@ const Login = () => {
 
       const { success, data } = await authApi.login(values.username, values.password)
 
-      if (!success || data.code !== '1') {
-        throw new Error('Failed to login')
+      if (!success || data?.code !== '1') {
+        throw new Error(data.message)
       }
+
+      const {
+        token,
+        userDetails
+      } = data.tokenResult.value
 
       const user = {
-        username: values.username,
-        fullName: data.name,
-        role: data.role
+        username: userDetails.userName,
+        fullName: userDetails.fullName,
+        role: userDetails.userRole
       }
-      dispatch(authActions.loginSuccess(user))
-      history.replace(_.get(history, 'location.state.from') || '/')
 
+      notification.success({
+        message: 'Login Success',
+        description: 'Welcome to Trainistar'
+      })
+
+      dispatch(authActions.loginSuccess({ token, user }))
+      history.replace(history.location.state?.from || '/')
     } catch (error) {
-      console.log(error)
-
-      dispatch(authActions.loginFail())
 
       notification.error({
-        message: 'Login failed',
+        message: 'Login Failed',
         description: error.message
       })
 
+      dispatch(authActions.loginFail())
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const handleFinishFailed = (errorInfo) => {
-    console.log('handleFinishFailed', errorInfo)
   }
 
   if (isCheckingToken) {
@@ -80,60 +70,61 @@ const Login = () => {
   }
 
   return (
-    <WrapperLogin>
-      <WrapperLoginForm>
-        <Form
-          name='login'
-          initialValues={{
-            remember: true
-          }}
+    <Row>
+      <Col span={8} offset={8}>
+        <div className='h-screen flex items-center'>
+          <div className='bg-white p-6 border rounded-md flex-1 shadow-sm'>
+            <Form
+              name='login'
+              initialValues={{
+                remember: true
+              }}
+              layout='vertical'
+              //
+              onFinish={handleFinish}
+            >
+              <div className='flex justify-center'>
+                <img src='/logo.svg' className='h-10' />
+              </div>
 
-          onFinish={handleFinish}
-          onFinishFailed={handleFinishFailed}
+              <Form.Item
+                label='Username'
+                name='username'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your username'
+                  }
+                ]}
+              >
+                <Input
+                  placeholder='Username'
+                />
+              </Form.Item>
 
-          size='large'
-          layout='vertical'
-        >
-          <TitleLogin>Login</TitleLogin>
+              <Form.Item
+                label='Password'
+                name='password'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please etner your password'
+                  }
+                ]}
+              >
+                <Input.Password
+                  placeholder='Password'
+                />
+              </Form.Item>
 
-          <Form.Item
-            label='Username'
-            name='username'
-            rules={[
-              {
-                required: true,
-                message: 'Please enter your username'
-              }
-            ]}
-          >
-            <Input
-              placeholder='Username'
-            />
-          </Form.Item>
-
-          <Form.Item
-            label='Password'
-            name='password'
-            rules={[
-              {
-                required: true,
-                message: 'Please etner your password'
-              }
-            ]}
-          >
-            <Input.Password
-              placeholder='Password'
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <LoginButton type='primary' htmlType='submit' loading={isLoading} block>
-              Submit
-            </LoginButton>
-          </Form.Item>
-        </Form>
-      </WrapperLoginForm>
-    </WrapperLogin>
+              <Button type='primary' htmlType='submit' loading={isLoading} block>
+                Login
+              </Button>
+            </Form>
+          </div>
+        </div>
+      </Col>
+    </Row>
   )
 }
 

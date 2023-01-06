@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { AUTH_TOKEN_KEY } from '../constants/common'
 
 // ASP.NET API
 const axiosClient = axios.create({
@@ -9,10 +10,10 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use(async (config) => {
-  // const Authorization = getAuthorization()
-  // if (Authorization) {
-  //   config.headers.Authorization = Authorization
-  // }
+  const token = localStorage.getItem(AUTH_TOKEN_KEY)
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 })
 

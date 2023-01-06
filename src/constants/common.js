@@ -28,8 +28,7 @@ export const ROUTES = Object.freeze({
     { path: PATH.HOME, exact: true, component: 'HomePage' },
     { path: PATH.LISTCOURSEPAGE, component: 'ListCoursePage' },
     { path: PATH.NOTI, component: 'NotificationPage' },
-    { path: PATH.VIDEO, component: 'VideoPage' },
-    { path: PATH.USER, component: 'UserPage'}
+    { path: PATH.USER, component: 'UserPage' }
   ],
   PUBLIC: [{ path: PATH.LOGIN, component: 'LoginPage' }]
 })
@@ -56,5 +55,3 @@ export const CREATE_UPDATE_DELETE_STATUS = Object.freeze({
 })
 
 export const AUTH_TOKEN_KEY = '@Trainistar:AUTH_TOKEN'
-export const AUTH_ROLE_KEY = '@Trainistar:AUTH_ROLE'
-export const AUTH_USER_DATA_KEY = '@Trainistar:AUTH_USER_DATA'
