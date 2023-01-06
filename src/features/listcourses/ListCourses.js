@@ -1,6 +1,8 @@
-import { Button, Drawer, Form, Input, Radio, Select, Space, Table } from 'antd'
+import { Button, Drawer, Form, Input, notification, Radio, Select, Space, Table } from 'antd'
 import React, { useState } from 'react'
-
+import { courseApi } from '../../api'
+import { useDrawerState } from '../../hooks'
+import { DrawerAddFile } from './DrawerAddFile'
 
 const dataTimeRender = (time) => {
   if (time === 'month') return 'Month'
@@ -14,6 +16,9 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
   const [currentCourseDrawer, setCurrentCouseDrawer] = useState(null)
   const [typeManage, setTypeManage] = useState('month')
   const [form] = Form.useForm()
+
+  const drawerAddFile = useDrawerState()
+
   const showDrawer = (_) => {
     setCurrentCouseDrawer(_)
     setOpen(true)
@@ -21,9 +26,11 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
       { ..._ }
     )
   }
+
   const onClose = () => {
     setOpen(false)
   }
+
   const onFinish = (values) => {
     updateCourseById(currentCourseDrawer?.idCourse, values)
     console.log('Success:', values)
@@ -38,6 +45,32 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
   const handleChangeTypeManage = (e) => {
     setTypeManage(e.target.value)
     fetchTotalStudentByTime(e.target.value)
+  }
+
+  const handleAddFileSubmit = async (values) => {
+    try {
+      if (!currentCourseDrawer?.idCourse) {
+        throw new Error('Failed to add file')
+      }
+
+      const { success } = await courseApi.createFile({ courseId: currentCourseDrawer?.idCourse, link: values.link })
+
+      if (!success) {
+        throw new Error('Failed to add file')
+      }
+
+      notification.success({
+        message: 'Add file successfully',
+        description: 'Add file successfully'
+      })
+    } catch (error) {
+      notification.error({
+        message: 'Failed to add file',
+        description: 'Something went wrong'
+      })
+    } finally {
+      drawerAddFile.closeDrawer()
+    }
   }
 
   const columns = [
@@ -65,6 +98,10 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
       render: (_, record) => (
         <Space size='middle'>
           <Button onClick={() => showDrawer(_)}>Edit</Button>
+          <Button onClick={() => {
+            setCurrentCouseDrawer(_)
+            drawerAddFile.openDrawer()
+          }}>Add File</Button>
           <Button onClick={() => { deleteCourse(record) }}>Delete</Button>
         </Space>
       )
@@ -145,6 +182,8 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
           </Form.Item>
         </Form>
       </Drawer>
+
+      <DrawerAddFile isOpen={drawerAddFile.isOpen} onClose={drawerAddFile.closeDrawer} onSubmit={handleAddFileSubmit} />
     </React.Fragment>
   )
 
