@@ -27,5 +27,15 @@ export const courseApi = {
   search(keyword) {
     const url = `${prefix}/searchname/${keyword}`
     return axiosClient.get(url)
+  },
+
+  getCourseById(courseId) {
+    const url = `${prefix}/searchid/${courseId}`
+    return axiosClient.get(url)
+  },
+
+  joinCourse({ courseId, studentId }) {
+    const url = '/api/course_student/create'
+    return axiosClient.post(url, { idCourse: courseId, idStudent: studentId })
   }
 }

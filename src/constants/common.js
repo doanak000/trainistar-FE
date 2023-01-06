@@ -9,7 +9,8 @@ export const PATH = Object.freeze({
 
 export const PATH_STUDENT = Object.freeze({
   HOME: '/',
-  SEARCH: '/search'
+  SEARCH: '/search',
+  COURSE_DETAILS: '/course/:id'
 })
 
 export const SIDEBAR = Object.freeze({
@@ -43,7 +44,8 @@ export const ROUTES = Object.freeze({
   PUBLIC: [{ path: PATH.LOGIN, component: 'LoginPage' }],
   STUDENT: [
     { path: PATH_STUDENT.HOME, exact: true, component: 'student/HomePage' },
-    { path: PATH_STUDENT.SEARCH, component: 'student/SearchPage' }
+    { path: PATH_STUDENT.SEARCH, component: 'student/SearchPage' },
+    { path: PATH_STUDENT.COURSE_DETAILS, component: 'student/CourseDetailsPage' }
   ]
 })
 
