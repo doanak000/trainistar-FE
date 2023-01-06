@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react'
 
-import { courseApi, sampleApi, userApi } from '../api'
 import {
-  Spin,
-  notification,
-  Button,
-  Form,
-  Input,
-  Drawer,
-  Select,
-  InputNumber
+  Button, Drawer, Form,
+  Input, InputNumber, Spin
 } from 'antd'
-import { NOTIFICATION_TYPE } from '../constants/common'
+import { userApi } from '../api'
 import { Notification } from '../components/Notification/Notification'
+import { NOTIFICATION_TYPE } from '../constants/common'
 import ListUsers from '../features/users/ListUsers'
-const Context = React.createContext({
-  name: 'Default'
-})
+import { PageTitle } from '../components/page-title'
+// const Context = React.createContext({
+//   name: 'Default'
+// })
 
 const ListUserPage = () => {
   const [listUsers, setListUsers] = useState(null)
   const [isFetching, setIsFetching] = useState(true) // Init Loading State
-  const [optionTeacher, setOptionTeacher] = useState(null)
+  // const [optionTeacher, setOptionTeacher] = useState(null)
   const [openDrawerCreateUser, setOpenDrawerCreateUser] = useState(false)
   const showDrawerCreateUser = () => {
     setOpenDrawerCreateUser(true)
@@ -30,11 +25,11 @@ const ListUserPage = () => {
     setOpenDrawerCreateUser(false)
   }
 
-  const onFinishFailedDrawerCreateUser = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-    setOpenDrawerCreateUser(false)
-  }
-  const [api, contextHolder] = notification.useNotification()
+  // const onFinishFailedDrawerCreateUser = (errorInfo) => {
+  //   console.log('Failed:', errorInfo)
+  //   setOpenDrawerCreateUser(false)
+  // }
+  // const [api, contextHolder] = notification.useNotification()
   const fetchData = async () => {
     try {
       const { success, data } = await userApi.getAllUserApi()
@@ -95,7 +90,7 @@ const ListUserPage = () => {
 
   const onFinishDrawerCreateUser = async (values) => {
     console.log('SuccessCreateUser:', values)
-    const { success, data } = await userApi.createUser(values)
+    await userApi.createUser(values)
     fetchData()
     setOpenDrawerCreateUser(false)
   }
@@ -106,8 +101,10 @@ const ListUserPage = () => {
 
   return (
     <div>
-      <h1>List User Page</h1>
-      <Button onClick={showDrawerCreateUser} style={{marginBottom: '20px'}}>Create new user</Button>
+      <PageTitle title='Manager Users' renderRight={() => {
+        return <Button onClick={showDrawerCreateUser} type='primary'>Create User</Button>
+      }} />
+
       <div>
         {isFetching ? (
           <Spin />
@@ -153,18 +150,18 @@ const ListUserPage = () => {
           </Form.Item>
 
           <Form.Item label='First Name' name='firstName' rules={[
-              {
-                required: true
-              }
-            ]}>
+            {
+              required: true
+            }
+          ]}>
             <Input />
           </Form.Item>
 
           <Form.Item label='Last Name' name='lastName' rules={[
-              {
-                required: true
-              }
-            ]}>
+            {
+              required: true
+            }
+          ]}>
             <Input />
           </Form.Item>
 
@@ -181,13 +178,13 @@ const ListUserPage = () => {
             <Input />
           </Form.Item>
           <Form.Item label='Phone Number' name='phoneNumber'>
-            <InputNumber style={{width: '100%'}}/>
+            <InputNumber style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item 
-            label='Type User (1: Student, 2: Teacher)' 
-            name='typeUser' 
+          <Form.Item
+            label='Type User (1: Student, 2: Teacher)'
+            name='typeUser'
           >
-            <InputNumber max={2} min={1} style={{width: '100%'}} defaultValue={1}/>
+            <InputNumber max={2} min={1} style={{ width: '100%' }} defaultValue={1} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

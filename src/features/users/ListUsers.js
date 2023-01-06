@@ -1,12 +1,12 @@
+import { Button, Card, Drawer, Form, Input, InputNumber, Modal, Space, Table } from 'antd'
 import React, { useState } from 'react'
-import { Button, Card, Drawer, Form, Input, InputNumber, Modal, Select, Space, Table, Tag } from 'antd'
 import { userApi } from '../../api'
 
-const checkTypeStudent = (mark)=> {
+const checkTypeStudent = (mark) => {
   if (mark >= 8.5) return 'Good'
-  if (mark >= 7) return 'Rather' 
-  if (mark >=5.5) return 'Medium'
-  if (mark >=4) return 'Bad'
+  if (mark >= 7) return 'Rather'
+  if (mark >= 5.5) return 'Medium'
+  if (mark >= 4) return 'Bad'
   return 'Jitney'
 }
 
@@ -16,22 +16,19 @@ const ListUsers = ({
   updateUser
 }) => {
   const [open, setOpen] = useState(false)
-  const [currentUserDrawer, setCurrentUserDrawer] = useState(null)
   const [currentUserModal, setCurrentUserModal] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [form] = Form.useForm()
   const showDrawer = (_) => {
-    setCurrentUserDrawer(_)
     setOpen(true)
     form.setFieldsValue(
-      {..._}
+      { ..._ }
     )
   }
   const onClose = () => {
     setOpen(false)
   }
   const onFinish = (values) => {
-    // updateUser(currentUserDrawer?.idUser, values)
     console.log('Success:', values)
     setOpen(false)
   }
@@ -42,7 +39,7 @@ const ListUsers = ({
   }
 
   const showModal = async (record) => {
-    const { success, data } = await userApi.courseHistory(record.idUser)
+    const { data } = await userApi.courseHistory(record.idUser)
     setCurrentUserModal(data)
     setIsModalOpen(true)
   }
@@ -93,7 +90,7 @@ const ListUsers = ({
           >
             Delete
           </Button>
-          {record.typeUser === 1 && <Button onClick={()=> showModal(record)}> Detail Student </Button> }
+          {record.typeUser === 1 && <Button onClick={() => showModal(record)}> Detail Student </Button>}
         </Space>
       )
     }
@@ -101,7 +98,7 @@ const ListUsers = ({
 
   return (
     <>
-      <Table columns={columns} dataSource={listUsers} />
+      <Table columns={columns} dataSource={listUsers} bordered />
       <Drawer
         title='Update Users'
         placement='right'
@@ -151,17 +148,17 @@ const ListUsers = ({
           >
             <Input />
           </Form.Item>
-          <Form.Item 
-            label='Phone Number' 
-            name='phoneNumber' 
+          <Form.Item
+            label='Phone Number'
+            name='phoneNumber'
           >
-            <Input type='number' style={{width: '100%'}}/>
+            <Input type='number' style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item 
-            label='Type User (1: Student, 2: Teacher)' 
-            name='typeUser' 
+          <Form.Item
+            label='Type User (1: Student, 2: Teacher)'
+            name='typeUser'
           >
-            <InputNumber max={2} min={1} style={{width: '100%'}}/>
+            <InputNumber max={2} min={1} style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -173,13 +170,13 @@ const ListUsers = ({
         </Form>
       </Drawer>
       <Modal title='Student Info' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        {currentUserModal?.map((item,index)=>{
-          return (<div style={{paddingBottom: '10px'}} key={index}><Card title={item.nameCourse} >
+        {currentUserModal?.map((item, index) => {
+          return (<div style={{ paddingBottom: '10px' }} key={index}><Card title={item.nameCourse} >
             <p>Point: {item.mark}</p>
             <p>Type Student: {checkTypeStudent(item.mark)}</p>
-        </Card></div>)
+          </Card></div>)
         })
-       }
+        }
       </Modal>
     </>
   )

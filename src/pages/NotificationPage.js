@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react'
 
-import { courseApi, sampleApi, notificationApi } from '../api'
 import {
-  Spin,
-  notification,
-  Button,
-  Form,
-  Input,
-  Drawer,
-  Select,
-  InputNumber
+  Button, Drawer, Form,
+  Input, Spin
 } from 'antd'
-import { NOTIFICATION_TYPE } from '../constants/common'
-import { Notification } from '../components/Notification/Notification'
-const Context = React.createContext({
-  name: 'Default'
-})
+import { notificationApi } from '../api'
+import { PageTitle } from '../components/page-title'
+// const Context = React.createContext({
+//   name: 'Default'
+// })
 
 const NotificationPage = () => {
   const [listNotifications, setListNotifications] = useState(null)
   const [isFetching, setIsFetching] = useState(true) // Init Loading State
-  const [optionTeacher, setOptionTeacher] = useState(null)
+  // const [optionTeacher, setOptionTeacher] = useState(null)
   const [openDrawerCreateNotification, setOpenDrawerCreateNotification] = useState(false)
   const showDrawerCreateNotification = () => {
     setOpenDrawerCreateNotification(true)
@@ -29,11 +22,11 @@ const NotificationPage = () => {
     setOpenDrawerCreateNotification(false)
   }
 
-  const onFinishFailedDrawerCreateNotification = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-    setOpenDrawerCreateNotification(false)
-  }
-  const [api, contextHolder] = notification.useNotification()
+  // const onFinishFailedDrawerCreateNotification = (errorInfo) => {
+  //   console.log('Failed:', errorInfo)
+  //   setOpenDrawerCreateNotification(false)
+  // }
+  // const [api, contextHolder] = notification.useNotification()
   const fetchData = async () => {
     try {
       const { success, data } = await notificationApi.getAllNotificationApi()
@@ -55,7 +48,7 @@ const NotificationPage = () => {
 
   const onFinishDrawerCreateNotification = async (values) => {
     console.log('SuccessCreateNotification:', values)
-    const { success, data } = await notificationApi.createNotification(values?.data)
+    await notificationApi.createNotification(values?.data)
     fetchData()
     setOpenDrawerCreateNotification(false)
   }
@@ -66,19 +59,19 @@ const NotificationPage = () => {
 
   return (
     <div>
-      <h1>List Notification Page</h1>
-      <Button onClick={showDrawerCreateNotification}>Create new notification</Button>
+      <PageTitle title='Manage Notifications' renderRight={() => <Button type='primary' onClick={showDrawerCreateNotification}>Create Notification</Button>} />
+
       <div>
         {isFetching ? (
           <Spin />
         ) : (<>
-            {listNotifications?.slice(0, 5).map((item,index)=>{
-                return (
-                    <div style={{border: '1px solid black', padding: '10px 10px 10px 10px',marginTop:'20px',width: '100vh'}} key={index}>
-                        <p>{item?.data}</p>
-                    </div>
-                )
-            })}</>)}
+          {listNotifications?.slice(0, 5).map((item, index) => {
+            return (
+              <div style={{ border: '1px solid black', padding: '10px 10px 10px 10px', marginTop: '20px', width: '100vh' }} key={index}>
+                <p>{item?.data}</p>
+              </div>
+            )
+          })}</>)}
       </div>
       <Drawer
         title='Create Notifications'

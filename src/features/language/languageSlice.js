@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { translation } from '../../configs/translation'
 
-const locale = process.env.REACT_APP_LANGUAGE || 'ja'
-// const locale = navigator.language.includes('ja') ? 'ja' : 'en'
+const locale = 'en'
 
 export const languageSlice = createSlice({
   name: 'language',

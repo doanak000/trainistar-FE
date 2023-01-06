@@ -1,9 +1,12 @@
-import { Spin } from 'antd'
+import { notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, useLocation } from 'react-router-dom'
-import { AUTH_TOKEN_KEY, AUTH_USER_DATA_KEY, PATH, ROUTES } from '../constants/common'
-import LayoutAdmin from '../containers/layout/Layout'
+import { authApi } from '../api'
+import {
+  PATH,
+  ROUTES
+} from '../constants/common'
 import { authActions, selectIsLoggedIn } from '../features/auth/authSlice'
 
 export const PrivateRoute = (props) => {
@@ -15,17 +18,35 @@ export const PrivateRoute = (props) => {
   const location = useLocation()
 
   useEffect(() => {
-    console.log('Checking token...')
+    (async () => {
+      try {
+        console.log('Checking token...')
 
-    const token = localStorage.getItem(AUTH_TOKEN_KEY)
-    const user = JSON.parse(localStorage.getItem(AUTH_USER_DATA_KEY))
+        const { success, data } = await authApi.getMe()
 
-    if (token && user) {
-      dispatch(authActions.loginSuccess(user))
-    }
+        if (!success || data?.code !== '1') {
+          throw new Error(data.message || 'Invalid token')
+        }
 
-    setIsCheckingToken(false)
+        const tokenResult = data.tokenResult?.value
+        const user = {
+          username: tokenResult?.sub,
+          fullName: tokenResult?.fullName,
+          role: tokenResult?.role
+        }
 
+        console.log('Token result', user)
+        dispatch(authActions.checkTokenSuccess({ user }))
+      } catch (error) {
+        notification.error({
+          message: error.message,
+          description: 'Please log in again'
+        })
+        dispatch(authActions.logout())
+      } finally {
+        setIsCheckingToken(false)
+      }
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -37,9 +58,7 @@ export const PrivateRoute = (props) => {
     return <Redirect to={{ pathname: PATH.LOGIN, state: { from: location } }} />
   }
 
-  return (
-    <Route {...props} />
-  )
+  return <Route {...props} />
 }
 
 const RouteRender = ({ path, component, exact }) => (

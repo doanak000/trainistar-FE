@@ -1,8 +1,9 @@
 {
-  "name": "qrkuji-vermuda-frontend",
-  "version": "0.1.0",
+  "name": "trainistar-frontend",
+  "version": "1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/colors": "^6.0.0",
     "@apollo/client": "^3.3.11",
     "@craco/craco": "^6.1.1",
     "@emotion/react": "^11.1.5",
@@ -12,11 +13,11 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "add": "^2.0.6",
-    "antd": "^4.24.1",
+    "antd": "^5.1.2",
     "apollo-link": "^1.2.14",
     "axios": "^1.2.1",
     "caniuse-lite": "^1.0.30001418",
-    "craco-less": "^1.17.1",
+    "craco-resolve-url-loader": "^1.0.0",
     "graphql": "^15.5.0",
     "lodash": "^4.17.21",
     "react": "^17.0.1",
@@ -29,9 +30,8 @@
     "yarn": "^1.22.10"
   },
   "scripts": {
-    "start": "cp .env.staging .env && craco start",
-    "build": "cp .env.production .env && craco build",
-    "build-stag": "cp .env.staging .env && craco build",
+    "start": "craco start",
+    "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "eslint": "eslint ./src",
@@ -56,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^9",
     "babel-plugin-styled-components": "^1.12.0",
     "compression-webpack-plugin": "^7.1.2",
     "eslint": "^7.20.0",
@@ -69,7 +70,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^5.1.1",
     "lint-staged": "^10.5.4",
+    "postcss": "^7",
     "prettier": "^2.2.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "uglifyjs-webpack-plugin": "^2.2.0"
   },
   "resolutions": {

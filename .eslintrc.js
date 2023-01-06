@@ -27,10 +27,8 @@ module.exports = {
     'eol-last': ['error', 'always'],
     'jsx-quotes': ['error', 'prefer-single'],
     quotes: ['error', 'single'],
-    semi: ['error', 'never'],
     'max-lines': ['error', 10000],
     'comma-dangle': ['error', 'never'],
-    'no-unused-vars': 'off',
     'no-process-env': 'off',
     'prettier/prettier': [
       'error',
