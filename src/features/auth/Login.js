@@ -76,9 +76,6 @@ const Login = () => {
           <div className='bg-white p-6 border rounded-md flex-1 shadow-sm'>
             <Form
               name='login'
-              initialValues={{
-                remember: true
-              }}
               layout='vertical'
               //
               onFinish={handleFinish}

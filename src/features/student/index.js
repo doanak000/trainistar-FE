@@ -1,3 +1,4 @@
 export { StudentCourses } from './courses'
 export { StudentSearch } from './search'
-export { CourseDetails } from './course-details'
+export { StudentCourseDetails } from './course-details'
+export { StudentProfile } from './profile'

@@ -1,9 +1,9 @@
 import React from 'react'
-import { CourseDetails } from '../../features/student'
+import { StudentCourseDetails } from '../../features/student'
 
 const CourseDetailsPage = () => {
   return (
-    <CourseDetails />
+    <StudentCourseDetails />
   )
 }
 
