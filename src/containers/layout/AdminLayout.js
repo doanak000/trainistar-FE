@@ -38,7 +38,7 @@ export const AdminLayout = ({ children }) => {
       <header className='fixed top-0 w-full flex items-center h-14 bg-white border-b shadow-sm px-4 space-x-4 z-20'>
         <img src='/logo.svg' className='h-8' />
         <div className='border-l pl-4 relative top-0.5'>
-          <span className='font-semibold text-primary-500'>Admin</span>
+          <span className='font-semibold text-primary-500'>{currentUser.role}</span>
         </div>
 
         <div className='flex-1' />
@@ -64,6 +64,7 @@ export const AdminLayout = ({ children }) => {
           style={{ border: 0 }}
           items={[
             {
+              roles: [],
               key: SIDEBAR.HOME,
               label: 'Home',
               icon: <HomeOutlined style={{ fontSize: theme.sizes.M }} />,
@@ -72,6 +73,7 @@ export const AdminLayout = ({ children }) => {
               }
             },
             {
+              roles: [],
               key: SIDEBAR.LISTCOURSEPAGE,
               label: 'Courses',
               icon: <BookOutlined style={{ fontSize: theme.sizes.M }} />,
@@ -80,6 +82,7 @@ export const AdminLayout = ({ children }) => {
               }
             },
             {
+              roles: ['Admin', 'Manager'],
               key: SIDEBAR.SKILLS,
               label: 'Skills',
               icon: <StarOutlined style={{ fontSize: theme.sizes.M }} />,
@@ -88,6 +91,7 @@ export const AdminLayout = ({ children }) => {
               }
             },
             {
+              roles: ['Admin'],
               key: SIDEBAR.USER,
               label: 'Users',
               icon: <UserOutlined style={{ fontSize: theme.sizes.M }} />,
@@ -96,6 +100,7 @@ export const AdminLayout = ({ children }) => {
               }
             },
             {
+              roles: [],
               key: SIDEBAR.NOTI,
               label: 'Notifications',
               icon: <BellOutlined style={{ fontSize: theme.sizes.M }} />,
@@ -104,13 +109,14 @@ export const AdminLayout = ({ children }) => {
               }
             },
             {
+              roles: [],
               key: SIDEBAR.LOGOUT,
               label: 'Logout',
               icon: <LogoutOutlined style={{ fontSize: theme.sizes.M }} />,
               style: { color: colors.red[4] },
               onClick: handleLogoutClick
             }
-          ]}
+          ].filter(({ roles }) => roles.includes(currentUser.role) || roles.length === 0)}
         />
       </aside>
 

@@ -6,6 +6,8 @@ import { FormSkill } from './Form'
 import { PageTitle } from '../../../components/page-title'
 import { useSkillsData } from './hooks'
 import { FormAssignSkill } from './FormAssignSkill'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../auth/authSlice'
 
 export const AdminManageSkills = () => {
   const [idSkill, setIdSkill] = useState(null)
@@ -15,12 +17,14 @@ export const AdminManageSkills = () => {
   const drawerAddSkill = useDrawerState()
   const drawerAssignSkill = useDrawerState()
 
+  const currentUser = useSelector(selectCurrentUser)
+
   const handleCreateSkillSubmit = async (values) => {
     try {
       setIsSubmitting(true)
 
-      const { nameSkill, level, idManager } = values
-      const { success } = await courseApi.createSkill({ nameSkill, level, idManager })
+      const { nameSkill, level } = values
+      const { success } = await courseApi.createSkill({ nameSkill, level, idManager: currentUser.id })
 
       if (!success) {
         throw new Error('Failed to create skill')
@@ -105,7 +109,7 @@ export const AdminManageSkills = () => {
         return <Button type='primary' onClick={drawerAddSkill.openDrawer}>Create Skill</Button>
       }} />
 
-      <Table columns={columns} dataSource={skills} loading={isFetching} bordered />
+      <Table columns={columns} dataSource={skills} rowKey='idSkill' loading={isFetching} bordered />
 
       <FormSkill
         visible={drawerAddSkill.isOpen}

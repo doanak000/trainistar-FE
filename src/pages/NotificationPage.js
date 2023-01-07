@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import {
+  Alert,
   Button, Drawer, Form,
   Input, Spin
 } from 'antd'
@@ -64,17 +65,19 @@ const NotificationPage = () => {
       <div>
         {isFetching ? (
           <Spin />
-        ) : (<>
-          {listNotifications?.slice(0, 5).map((item, index) => {
-            return (
-              <div style={{ border: '1px solid black', padding: '10px 10px 10px 10px', marginTop: '20px', width: '100vh' }} key={index}>
-                <p>{item?.data}</p>
-              </div>
-            )
-          })}</>)}
+        ) : (
+          <div className='space-y-2'>
+            {listNotifications?.slice(0, 5).map((item, index) => {
+              return (
+                <Alert key={index} message={item?.data} />
+              )
+            })}
+          </div>
+        )}
       </div>
+
       <Drawer
-        title='Create Notifications'
+        title='Create Notification'
         placement='right'
         onClose={onCloseDrawerCreateNotification}
         open={openDrawerCreateNotification}

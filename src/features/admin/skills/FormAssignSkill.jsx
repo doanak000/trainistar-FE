@@ -14,7 +14,7 @@ export const FormAssignSkill = ({ onClose, visible, isSubmitting, onSubmit }) =>
   }, [])
 
   return (
-    <Drawer title='Assign Skill' width={720} onClose={onClose} open={visible} bodyStyle={{ paddingBottom: 80 }}>
+    <Drawer title='Assign Skill' width={720} onClose={onClose} open={visible} bodyStyle={{ paddingBottom: 80 }} closable>
       <Form layout='vertical' onFinish={onSubmit}>
         <Row gutter={16}>
           <Col span={12}>

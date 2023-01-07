@@ -1,7 +1,9 @@
 import { Button, Drawer, Form, Input, notification, Radio, Select, Space, Table } from 'antd'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { courseApi } from '../../api'
 import { useDrawerState } from '../../hooks'
+import { selectCurrentUser } from '../auth/authSlice'
 import { DrawerAddFile } from './DrawerAddFile'
 
 const dataTimeRender = (time) => {
@@ -18,6 +20,8 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
   const [form] = Form.useForm()
 
   const drawerAddFile = useDrawerState()
+
+  const currentUser = useSelector(selectCurrentUser)
 
   const showDrawer = (_) => {
     setCurrentCouseDrawer(_)
@@ -129,17 +133,21 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
   ]
 
   return (
-    <React.Fragment>
+    <>
       <div className='space-y-4'>
-        <Table bordered columns={columns} dataSource={listCourses}></Table>
+        <Table bordered columns={columns} dataSource={listCourses} rowKey='idCourse'></Table>
 
-        <Radio.Group value={typeManage} onChange={handleChangeTypeManage}>
-          <Radio.Button value='month'>Month</Radio.Button>
-          <Radio.Button value='quarter'>Quarter</Radio.Button>
-          <Radio.Button value='year'>Year</Radio.Button>
-        </Radio.Group>
+        {['Admin', 'Manager'].includes(currentUser.role) && (
+          <>
+            <Radio.Group value={typeManage} onChange={handleChangeTypeManage}>
+              <Radio.Button value='month'>Month</Radio.Button>
+              <Radio.Button value='quarter'>Quarter</Radio.Button>
+              <Radio.Button value='year'>Year</Radio.Button>
+            </Radio.Group>
 
-        <Table bordered columns={columnsManage} dataSource={listManageCourses}></Table>
+            <Table bordered columns={columnsManage} dataSource={listManageCourses} rowKey='idCourse'></Table>
+          </>
+        )}
       </div>
 
       <Drawer title='Update Courses' placement='right' onClose={onClose} open={open}>
@@ -184,7 +192,7 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
       </Drawer>
 
       <DrawerAddFile isOpen={drawerAddFile.isOpen} onClose={drawerAddFile.closeDrawer} onSubmit={handleAddFileSubmit} />
-    </React.Fragment>
+    </>
   )
 
 }

@@ -56,6 +56,7 @@ export const PrivateRoute = ({ roles = [], ...props }) => {
 
         const tokenResult = data.tokenResult?.value
         const user = {
+          id: tokenResult?.userId,
           username: tokenResult?.sub,
           fullName: tokenResult?.fullName,
           role: tokenResult?.role
