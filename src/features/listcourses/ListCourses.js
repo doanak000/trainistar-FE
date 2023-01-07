@@ -5,6 +5,7 @@ import { courseApi } from '../../api'
 import { useDrawerState } from '../../hooks'
 import { selectCurrentUser } from '../auth/authSlice'
 import { DrawerAddFile } from './DrawerAddFile'
+import { DrawerUpdateMark } from './DrawerUpdateMark'
 
 const dataTimeRender = (time) => {
   if (time === 'month') return 'Month'
@@ -20,6 +21,7 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
   const [form] = Form.useForm()
 
   const drawerAddFile = useDrawerState()
+  const drawerUpdateMark = useDrawerState()
 
   const currentUser = useSelector(selectCurrentUser)
 
@@ -77,6 +79,34 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
     }
   }
 
+  const handleUpdateMarkSubmit = async (values) => {
+    try {
+      if (!currentCourseDrawer?.idCourse) {
+        throw new Error('Failed to update mark')
+      }
+
+      const { success } = await courseApi.updateMark({
+        courseId: currentCourseDrawer?.idCourse,
+        idStudent: values.studentId,
+        mark: values.mark
+      })
+
+      if (!success) {
+        throw new Error('Failed to update mark')
+      }
+
+      notification.success({
+        message: 'Update mark successfully'
+      })
+    } catch (error) {
+      notification.error({
+        message: error.message
+      })
+    } finally {
+      drawerUpdateMark.closeDrawer()
+    }
+  }
+
   const columns = [
     {
       title: 'Course Name',
@@ -106,6 +136,12 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
             setCurrentCouseDrawer(_)
             drawerAddFile.openDrawer()
           }}>Add File</Button>
+          {currentUser.role === 'Admin' && (
+            <Button onClick={() => {
+              setCurrentCouseDrawer(_)
+              drawerUpdateMark.openDrawer()
+            }}>Update Mark</Button>
+          )}
           <Button onClick={() => { deleteCourse(record) }}>Delete</Button>
         </Space>
       )
@@ -192,6 +228,8 @@ const ListCourses = ({ listCourses, deleteCourse, updateCourseById, optionTeache
       </Drawer>
 
       <DrawerAddFile isOpen={drawerAddFile.isOpen} onClose={drawerAddFile.closeDrawer} onSubmit={handleAddFileSubmit} />
+
+      <DrawerUpdateMark isOpen={drawerUpdateMark.isOpen} onClose={drawerUpdateMark.closeDrawer} courseId={currentCourseDrawer?.idCourse} onSubmit={handleUpdateMarkSubmit} />
     </>
   )
 

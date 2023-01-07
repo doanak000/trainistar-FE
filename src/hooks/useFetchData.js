@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useFetchData = (api) => {
+export const useFetchData = (api, shouldInit = true) => {
   const [data, setData] = useState([])
   const [isFetching, setIsFetching] = useState(true)
 
@@ -24,7 +24,9 @@ export const useFetchData = (api) => {
   }
 
   useEffect(() => {
-    fetchData()
+    if (shouldInit) {
+      fetchData()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
