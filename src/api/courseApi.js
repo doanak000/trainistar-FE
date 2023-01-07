@@ -42,5 +42,20 @@ export const courseApi = {
   createFile({ courseId, link }) {
     const url = '/api/importedfile/create'
     return axiosClient.post(url, { idCourse: courseId, link })
+  },
+
+  getSkills() {
+    const url = '/api/skill/all'
+    return axiosClient.get(url)
+  },
+
+  createSkill({ nameSkill, level, idManager }) {
+    const url = '/api/skill/create'
+    return axiosClient.post(url, { name, level, idManager })
+  },
+
+  assignSkill({ idSkill, idCourse }) {
+    const url = '/api/course_skill/create'
+    return axiosClient.post(url, { idSkill, idCourse })
   }
 }
