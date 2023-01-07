@@ -62,5 +62,10 @@ export const courseApi = {
   getCourseHistories({ idStudent }) {
     const url = `/api/course_student/history/${idStudent}`
     return axiosClient.get(url)
+  },
+
+  updateMark({ idStudent, idCourse, mark }) {
+    const url = `/api/course_student/mark/${idStudent}/${idCourse}`
+    return axiosClient.put(url, { idStudent, idCourse, mark })
   }
 }

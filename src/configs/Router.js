@@ -1,20 +1,46 @@
-import { notification, Spin } from 'antd'
+import { Button, notification, Result, Spin } from 'antd'
+import _ from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, Route, useLocation } from 'react-router-dom'
+import { Redirect, Route, useHistory, useLocation } from 'react-router-dom'
 import { authApi } from '../api'
 import {
   PATH,
   ROUTES
 } from '../constants/common'
-import { authActions, selectIsLoggedIn } from '../features/auth/authSlice'
+import { authActions, selectCurrentUser, selectIsLoggedIn } from '../features/auth/authSlice'
 
-export const PrivateRoute = (props) => {
+const NotPermission = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  return (
+    <div className='w-screen h-screen flex items-center justify-center'>
+      <Result
+        status='warning'
+        title='You do not have permission to access this page'
+        extra={
+          <div className='space-x-4'>
+            <Button size='large' onClick={() => history.push('/')}>
+              Go Home
+            </Button>
+            <Button type='primary' size='large' onClick={() => dispatch(authActions.logout())}>
+              Logout
+            </Button>
+          </div>
+        }
+      />
+    </div>
+  )
+}
+
+export const PrivateRoute = ({ roles = [], ...props }) => {
   const dispatch = useDispatch()
 
   const [isCheckingToken, setIsCheckingToken] = useState(true)
 
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const currentUser = useSelector(selectCurrentUser)
   const location = useLocation()
 
   useEffect(() => {
@@ -60,6 +86,12 @@ export const PrivateRoute = (props) => {
 
   if (!isLoggedIn) {
     return <Redirect to={{ pathname: PATH.LOGIN, state: { from: location } }} />
+  }
+
+  if (_.isArray(roles) && roles?.length > 0 && !roles?.includes?.(currentUser?.role)) {
+    return (
+      <NotPermission />
+    )
   }
 
   return <Route {...props} />

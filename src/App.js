@@ -13,13 +13,13 @@ const App = () => {
         <Switch>
           {PublicRoutes}
 
-          <PrivateRoute path='/admin'>
+          <PrivateRoute path='/admin' roles={['Admin', 'Manager', 'Trainer']}>
             <AdminLayout>
               {PrivateRoutes}
             </AdminLayout>
           </PrivateRoute>
 
-          <PrivateRoute path='/'>
+          <PrivateRoute path='/' roles={['Student']}>
             <StudentLayout>
               {StudentRoutes}
             </StudentLayout>
