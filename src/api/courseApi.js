@@ -57,5 +57,10 @@ export const courseApi = {
   assignSkill({ idSkill, idCourse }) {
     const url = '/api/course_skill/create'
     return axiosClient.post(url, { idSkill, idCourse })
+  },
+
+  updateMark({ idStudent, idCourse, mark }) {
+    const url = `/api/course_student/mark/${idStudent}/${idCourse}`
+    return axiosClient.put(url, { idStudent, idCourse, mark })
   }
 }

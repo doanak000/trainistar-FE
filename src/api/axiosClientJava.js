@@ -9,11 +9,11 @@ const axiosClientJava = axios.create({
 })
 
 axiosClientJava.interceptors.request.use(async (config) => {
-  // const Authorization = getAuthorization()
-  // if (Authorization) {
-  //   config.headers.Authorization = Authorization
+  // const token = localStorage.getItem(AUTH_TOKEN_KEY)
+  // if (token) {
+  //   config.headers.Authorization = `Bearer ${token}`
   // }
-  return config
+  // return config
 })
 
 axiosClientJava.interceptors.response.use((response) => {
