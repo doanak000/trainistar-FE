@@ -1,4 +1,4 @@
-import { HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined, HistoryOutlined } from '@ant-design/icons'
+import { HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined, HistoryOutlined, TrophyOutlined } from '@ant-design/icons'
 import { Menu, Modal } from 'antd'
 
 import * as colors from '@ant-design/colors'
@@ -84,6 +84,14 @@ export const StudentLayout = ({ children }) => {
               icon: <HistoryOutlined style={{ fontSize: theme.sizes.M }} />,
               onClick: () => {
                 history.push(PATH_STUDENT.HISTORIES)
+              }
+            },
+            {
+              key: SIDEBAR_STUDENT.CERTIFICATES,
+              label: 'My Certificates',
+              icon: <TrophyOutlined style={{ fontSize: theme.sizes.M }} />,
+              onClick: () => {
+                history.push(PATH_STUDENT.CERTIFICATES)
               }
             },
             {

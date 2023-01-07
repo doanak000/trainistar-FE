@@ -72,5 +72,10 @@ export const courseApi = {
   updateMark({ idStudent, idCourse, mark }) {
     const url = `/api/course_student/mark/${idStudent}/${idCourse}`
     return axiosClient.put(url, { idStudent, idCourse, mark })
+  },
+
+  getCertificates({ idStudent }) {
+    const url = `/api/student_certificate/get/${idStudent}`
+    return axiosClient.get(url)
   }
 }

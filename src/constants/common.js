@@ -13,6 +13,7 @@ export const PATH_STUDENT = Object.freeze({
   SEARCH: '/search',
   COURSE_DETAILS: '/course/:id',
   HISTORIES: '/course-histories',
+  CERTIFICATES: '/certificates',
   PROFILE: '/profile'
 })
 
@@ -30,6 +31,7 @@ export const SIDEBAR_STUDENT = Object.freeze({
   HOME: PATH_STUDENT.HOME,
   SEARCH: PATH_STUDENT.SEARCH,
   HISTORIES: PATH_STUDENT.HISTORIES,
+  CERTIFICATES: PATH_STUDENT.CERTIFICATES,
   PROFILE: PATH_STUDENT.PROFILE
 })
 
@@ -54,6 +56,7 @@ export const ROUTES = Object.freeze({
     { path: PATH_STUDENT.SEARCH, component: 'student/SearchPage' },
     { path: PATH_STUDENT.COURSE_DETAILS, component: 'student/CourseDetailsPage' },
     { path: PATH_STUDENT.HISTORIES, component: 'student/HistoriesPage' },
+    { path: PATH_STUDENT.CERTIFICATES, component: 'student/CertificatesPage' },
     { path: PATH_STUDENT.PROFILE, component: 'student/ProfilePage' }
   ]
 })
