@@ -3,7 +3,7 @@ import React from 'react'
 
 export const DrawerAddFile = ({ isOpen, onClose, onSubmit }) => {
   return (
-    <Drawer title='Add File' placement='right' onClose={onClose.closeDrawer} open={isOpen}>
+    <Drawer title='Add File' placement='right' onClose={onClose} open={isOpen}>
       <Form
         name='add-file'
         layout='vertical'

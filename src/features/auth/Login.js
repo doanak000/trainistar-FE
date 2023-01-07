@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, notification, Row } from 'antd'
+import { Button, Col, Form, Input, notification, Row, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -28,7 +28,8 @@ const Login = () => {
     try {
       setIsLoading(true)
 
-      const { success, data } = await authApi.login(values.username, values.password)
+      const { success, data } = await authApi.login(values.role, values.username, values.password)
+      console.log('🚀 ~ file: Login.js:32 ~ handleFinish ~ data', data)
 
       if (!success || data?.code !== '1') {
         throw new Error(data.message)
@@ -40,6 +41,7 @@ const Login = () => {
       } = data.tokenResult.value
 
       const user = {
+        id: userDetails.userId,
         username: userDetails.userName,
         fullName: userDetails.fullName,
         role: userDetails.userRole
@@ -78,11 +80,47 @@ const Login = () => {
               name='login'
               layout='vertical'
               //
+              initialValues={{
+                role: 'Student'
+              }}
               onFinish={handleFinish}
             >
               <div className='flex justify-center'>
                 <img src='/logo.svg' className='h-10' />
               </div>
+
+              <Form.Item
+                label='Role'
+                name='role'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select your role'
+                  }
+                ]}
+              >
+                <Select
+                  placeholder='Select your role'
+                  options={[
+                    {
+                      label: 'Admin',
+                      value: 'Admin'
+                    },
+                    {
+                      label: 'Manager',
+                      value: 'Manager'
+                    },
+                    {
+                      label: 'Trainer',
+                      value: 'Trainer'
+                    },
+                    {
+                      label: 'Student',
+                      value: 'Student'
+                    }
+                  ]}
+                />
+              </Form.Item>
 
               <Form.Item
                 label='Username'
