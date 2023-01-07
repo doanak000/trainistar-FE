@@ -39,6 +39,11 @@ export const courseApi = {
     return axiosClient.post(url, { idCourse: courseId, idStudent: studentId })
   },
 
+  getFiles({ courseId }) {
+    const url = `/api/importedfile/${courseId}`
+    return axiosClient.get(url)
+  },
+
   createFile({ courseId, link }) {
     const url = '/api/importedfile/create'
     return axiosClient.post(url, { idCourse: courseId, link })
