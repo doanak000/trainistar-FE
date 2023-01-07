@@ -1,17 +1,21 @@
-import { Button, Drawer, Form, Input, Select, Spin } from 'antd'
+import { Button, Drawer, Form, Input, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { courseApi, userApi } from '../api'
 import { Notification } from '../components/Notification/Notification'
 import { PageTitle } from '../components/page-title'
 import { NOTIFICATION_TYPE } from '../constants/common'
 import ListCourses from '../features/listcourses/ListCourses'
+import { LoadingFullscreen } from '../components/loading-fullscreen'
+import { useCoursesData } from '../features/listcourses/hook'
 
 const ListCoursePage = () => {
-  const [listCourses, setListCourses] = useState(null)
   const [isFetching, setIsFetching] = useState(true) // Init Loading State
   const [optionTeacher, setOptionTeacher] = useState(null)
   const [openDrawerCreateCourse, setOpenDrawerCreateCourse] = useState(false)
   const [listManageCourses, setListManageCourses] = useState(null)
+
+  const coursesData = useCoursesData()
+
   const showDrawerCreateCourse = () => {
     setOpenDrawerCreateCourse(true)
   }
@@ -23,23 +27,23 @@ const ListCoursePage = () => {
     console.log('Failed:', errorInfo)
     setOpenDrawerCreateCourse(false)
   }
-  const fetchData = async () => {
-    try {
-      const { success, data } = await courseApi.getListCourseApi()
-      if (!success) {
-        throw new Error(data)
-      }
-      // Handle Success
-      console.log('Success', data)
-      setListCourses(data)
+  // const fetchData = async () => {
+  //   try {
+  //     const { success, data } = await courseApi.getListCourseApi()
+  //     if (!success) {
+  //       throw new Error(data)
+  //     }
+  //     // Handle Success
+  //     console.log('Success', data)
+  //     setListCourses(data)
 
-    } catch (error) {
-      // Handle Error
-      console.error('Error', error?.message)
-    } finally {
-      setIsFetching(false)
-    }
-  }
+  //   } catch (error) {
+  //     // Handle Error
+  //     console.error('Error', error?.message)
+  //   } finally {
+  //     setIsFetching(false)
+  //   }
+  // }
 
   const deleteCourse = async (record) => {
     try {
@@ -51,7 +55,7 @@ const ListCoursePage = () => {
         type: NOTIFICATION_TYPE.ERROR,
         message: 'Courses having student. Can not delete'
       })
-      fetchData()
+      coursesData.getCourses()
     } catch (error) {
       // Handle Error
       console.error('Error', error?.message)
@@ -70,7 +74,7 @@ const ListCoursePage = () => {
         type: NOTIFICATION_TYPE.INFO,
         message: data?.message
       })
-      fetchData()
+      coursesData.getCourses()
     } catch (error) {
       // Handle Error
       console.error('Error', error?.message)
@@ -108,7 +112,7 @@ const ListCoursePage = () => {
   const onFinishDrawerCreateCourse = async (values) => {
     console.log('SuccessCreateCourse:', values)
     await courseApi.createCourse(values)
-    fetchData()
+    coursesData.getCourses()
     setOpenDrawerCreateCourse(false)
   }
 
@@ -125,9 +129,10 @@ const ListCoursePage = () => {
     }
   }
   useEffect(() => {
-    fetchData()
+    coursesData.getCourses()
     fetchListTeacher()
     fetchTotalStudentByTime('month')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -137,7 +142,7 @@ const ListCoursePage = () => {
       }} />
 
       <div>
-        {isFetching ? <Spin /> : <ListCourses listCourses={listCourses} deleteCourse={deleteCourse}
+        {isFetching ? <LoadingFullscreen /> : <ListCourses listCourses={coursesData.courses} deleteCourse={deleteCourse}
           updateCourseById={updateCourseById} optionTeacher={optionTeacher}
           fetchTotalStudentByTime={fetchTotalStudentByTime} listManageCourses={listManageCourses} />}
       </div>

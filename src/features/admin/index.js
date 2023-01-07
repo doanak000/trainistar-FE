@@ -1,0 +1,1 @@
+export { ManagerSkills } from './skills'

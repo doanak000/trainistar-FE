@@ -1,4 +1,4 @@
-import { BellOutlined, BookOutlined, HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
+import { BellOutlined, BookOutlined, HomeOutlined, LogoutOutlined, UserOutlined, StarOutlined } from '@ant-design/icons'
 import { Avatar, Menu, Modal } from 'antd'
 
 import React, { useEffect, useState } from 'react'
@@ -77,6 +77,14 @@ export const AdminLayout = ({ children }) => {
               icon: <BookOutlined style={{ fontSize: theme.sizes.M }} />,
               onClick: () => {
                 history.push(PATH.LISTCOURSEPAGE)
+              }
+            },
+            {
+              key: SIDEBAR.SKILLS,
+              label: 'Skills',
+              icon: <StarOutlined style={{ fontSize: theme.sizes.M }} />,
+              onClick: () => {
+                history.push(PATH.SKILLS)
               }
             },
             {
