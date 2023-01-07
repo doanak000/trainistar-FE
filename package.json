@@ -29,6 +29,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-spinners": "^0.10.6",
+    "serve": "^14.1.2",
     "styled-components": "^5.2.1",
     "yarn": "^1.22.10"
   },
@@ -38,7 +39,10 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "eslint": "eslint ./src",
-    "eslint-fix": "eslint ./src --fix"
+    "eslint-fix": "eslint ./src --fix",
+    "serve:start": "serve -s build -l 4000",
+    "pm2:start": "pm2 start ./ecosystem.config.js --env production ; pm2 status",
+    "pm2:reload": "pm2 reload ./ecosystem.config.js --env production ; pm2 status"
   },
   "husky": {
     "hooks": {
