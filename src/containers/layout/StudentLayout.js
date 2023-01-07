@@ -1,4 +1,4 @@
-import { HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined, HistoryOutlined, TrophyOutlined } from '@ant-design/icons'
+import { HomeOutlined, LogoutOutlined, SearchOutlined, UserOutlined, HistoryOutlined, TrophyOutlined, BellOutlined } from '@ant-design/icons'
 import { Menu, Modal } from 'antd'
 
 import * as colors from '@ant-design/colors'
@@ -80,7 +80,7 @@ export const StudentLayout = ({ children }) => {
             },
             {
               key: SIDEBAR_STUDENT.HISTORIES,
-              label: 'Course Histories',
+              label: 'My Courses',
               icon: <HistoryOutlined style={{ fontSize: theme.sizes.M }} />,
               onClick: () => {
                 history.push(PATH_STUDENT.HISTORIES)
@@ -92,6 +92,14 @@ export const StudentLayout = ({ children }) => {
               icon: <TrophyOutlined style={{ fontSize: theme.sizes.M }} />,
               onClick: () => {
                 history.push(PATH_STUDENT.CERTIFICATES)
+              }
+            },
+            {
+              key: SIDEBAR_STUDENT.NOTIFICATIONS,
+              label: 'Notifications',
+              icon: <BellOutlined style={{ fontSize: theme.sizes.M }} />,
+              onClick: () => {
+                history.push(PATH_STUDENT.NOTIFICATIONS)
               }
             },
             {

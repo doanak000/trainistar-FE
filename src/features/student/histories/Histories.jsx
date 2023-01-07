@@ -29,7 +29,7 @@ export const StudentHistories = () => {
 
   return (
     <div>
-      <PageTitle title='Course Histories' />
+      <PageTitle title='My Courses' />
 
       <Table
         columns={columns}

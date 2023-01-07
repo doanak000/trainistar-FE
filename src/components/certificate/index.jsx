@@ -18,9 +18,10 @@ const styles = StyleSheet.create({
 })
 
 export const Certificate = ({ fullName, certName }) => {
-  return (
+  const title = `${certName} - ${fullName}`
 
-    <Document author='Trainistar' creator='Trainistar' language='en' title={`${certName} - ${fullName}`}>
+  return (
+    <Document author='Trainistar' creator='Trainistar' language='en' title={title} subject={title}>
       <Page size='A4' orientation='landscape' style={styles.page}>
         <View>
           <Image src='/images/cert-frame.jpg' style={{ width: '100%', height: '100%' }} />
