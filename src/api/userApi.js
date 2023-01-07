@@ -11,11 +11,14 @@ export const userApi = {
   },
   createUser(data) {
     const url = '/api/user/create'
-    return axiosClient.post(url,{ data })
+    return axiosClient.post(url, { data })
   },
   courseHistory(id) {
     const url = `/api/course_student/history/${id}`
-    return axiosClient.get(url)  
+    return axiosClient.get(url)
+  },
+  updateStudentProfile({ studentId, firstName, lastName }) {
+    const url = `/api/user/updateStudentName/${studentId}`
+    return axiosClient.put(url, { firstName, lastName })
   }
-
 }

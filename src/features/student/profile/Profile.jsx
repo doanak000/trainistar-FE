@@ -1,6 +1,7 @@
 import { Button, Col, Form, Input, notification, Row } from 'antd'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { userApi } from '../../../api'
 import { PageTitle } from '../../../components/page-title'
 import { selectCurrentUser } from '../../auth/authSlice'
 
@@ -12,6 +13,12 @@ export const StudentProfile = () => {
   const handleFinish = async (values) => {
     try {
       setIsLoading(true)
+
+      const { success, data } = await userApi.updateProfile({ ...values, userId: currentUser.id })
+
+      if (!success || data?.code !== '1') {
+        throw new Error('Update Profile Failed')
+      }
 
       notification.success({
         message: 'Update Profile Success'
@@ -37,19 +44,35 @@ export const StudentProfile = () => {
             <Form
               name='update-profile'
               initialValues={{
-                fullName: currentUser.fullName
+                firstName: currentUser?.fullName?.split(' ')[0],
+                lastName: currentUser?.fullName?.split(' ')[1]
               }}
               layout='vertical'
               //
               onFinish={handleFinish}
             >
               <Form.Item
-                label='Full Name'
-                name='fullName'
+                label='First Name'
+                name='firstName'
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter your full name'
+                    message: 'Please enter your first name'
+                  }
+                ]}
+              >
+                <Input
+                  placeholder='First Name'
+                />
+              </Form.Item>
+
+              <Form.Item
+                label='Last Name'
+                name='lastName'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your last name'
                   }
                 ]}
               >
