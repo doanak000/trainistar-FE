@@ -77,5 +77,10 @@ export const courseApi = {
   getCertificates({ idStudent }) {
     const url = `/api/student_certificate/get/${idStudent}`
     return axiosClient.get(url)
+  },
+
+  getCourseStudents({ idCourse }) {
+    const url = `/api/user/student/${idCourse}`
+    return axiosClient.get(url)
   }
 }

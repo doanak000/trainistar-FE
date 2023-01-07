@@ -8,7 +8,6 @@ import { useSkillsData } from './hooks'
 import { FormAssignSkill } from './FormAssignSkill'
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../auth/authSlice'
-import { Certificate } from '../../../components/certificate'
 
 export const AdminManageSkills = () => {
   const [idSkill, setIdSkill] = useState(null)
@@ -109,8 +108,6 @@ export const AdminManageSkills = () => {
       <PageTitle title='Manage Skills' renderRight={() => {
         return <Button type='primary' onClick={drawerAddSkill.openDrawer}>Create Skill</Button>
       }} />
-
-      <Certificate fullName='Nguyen Chanh Dai' certName='Engaging in Persuasive and Credible Communication' />
 
       <Table columns={columns} dataSource={skills} rowKey='idSkill' loading={isFetching} bordered />
 
