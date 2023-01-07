@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { authApi } from '../../api'
-import { AUTH_TOKEN_KEY, PATH } from '../../constants/common'
+import { AUTH_TOKEN_KEY, PATH, PATH_STUDENT } from '../../constants/common'
 import { authActions } from './authSlice'
 
 const Login = () => {
@@ -52,8 +52,15 @@ const Login = () => {
         description: 'Welcome to Trainistar'
       })
 
+      const x = {
+        Admin: PATH.LISTCOURSEPAGE,
+        Manager: PATH.LISTCOURSEPAGE,
+        Trainer: PATH.LISTCOURSEPAGE,
+        Student: PATH_STUDENT.HOME
+      }
+
       dispatch(authActions.loginSuccess({ token, user }))
-      history.replace(history.location.state?.from || '/')
+      history.replace(x[user.role])
     } catch (error) {
 
       notification.error({
