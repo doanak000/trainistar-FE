@@ -3,8 +3,8 @@ import axiosClient from './axiosClient'
 const prefix = '/auth'
 
 const authUrl = {
-  Admin: `${prefix}/admin-manager`,
-  Manager: `${prefix}/admin-manager`,
+  Admin: `${prefix}/admin`,
+  Manager: `${prefix}/manager`,
   Trainer: `${prefix}/trainer-student`,
   Student: `${prefix}/trainer-student`
 }
